@@ -1,0 +1,67 @@
+.fr-generator-canvas {
+  flex: 1;
+  padding: 0 8px;
+  overflow: auto;
+}
+
+.flex .fr-generator-canvas-field {
+  display: flex;
+}
+
+.flex-column .fr-generator-canvas-field {
+  flex-direction: column;
+}
+
+.fr-generator-canvas-field {
+  padding: 20px 8px 0;
+  border: 1px dashed #bbb;
+  margin: 0 0 8px;
+  flex: 1;
+  background-color: #fff;
+  position: relative;
+}
+
+.fr-generator-canvas-field.object {
+  background-color: rgb(246, 245, 246);
+}
+
+.fr-generator-canvas-field.selected {
+  border-color: transparent;
+  outline: rgb(64, 158, 255) solid 2px;
+}
+
+.fr-generator-canvas-field-id {
+  position: absolute;
+  right: 20px;
+  top: 2px;
+  color: #357edd;
+  font-size: 12px;
+}
+
+.fr-generator-canvas-pointer-move {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-color: #409eff;
+  width: 20px;
+  line-height: 20px;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+}
+
+.fr-generator-canvas-pointer-operate {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  background-color: #409eff;
+  color: #fff;
+  display: flex;
+  border-top-left-radius: 8px;
+  padding: 0 4px;
+}
+
+.fr-generator-canvas-pointer-operate-item {
+  padding: 0 4px;
+  cursor: pointer;
+}

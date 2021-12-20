@@ -51,6 +51,7 @@ function App({
   column,
   removeHiddenData = false,
   globalProps = {},
+  fieldRender,
   ...rest
 }) {
   try {
@@ -187,6 +188,7 @@ function App({
       disabled,
       allCollapsed,
       showValidate,
+      fieldRender,
     }),
     [
       displayType,
@@ -201,6 +203,7 @@ function App({
       disabled,
       allCollapsed,
       showValidate,
+      fieldRender,
     ]
   );
 

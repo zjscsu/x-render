@@ -34,6 +34,7 @@ const RenderField = props => {
     showValidate,
     validateMessages,
     locale,
+    fieldRender,
   } = useStore2();
   const {
     onValuesChange,
@@ -222,4 +223,12 @@ const RenderField = props => {
   );
 };
 
-export default RenderField;
+const RenderFieldHOC = (props) => {
+  const { fieldRender } = useStore2();
+  if (!fieldRender) {
+    return <RenderField {...props} />;
+  }
+  return fieldRender(props, RenderField);
+}
+
+export default RenderFieldHOC;

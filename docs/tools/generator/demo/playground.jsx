@@ -11,15 +11,27 @@ const Demo = () => {
     window.open('/playground');
   };
 
-  const handleClick = () => {
-    console.log(ref);
-  }
-
   return (
     <div className="fr-generator-playground" style={{ height: '80vh' }}>
-      <div onClick={handleClick}>测试</div>
       <Generator
         ref={ref}
+        defaultValue={{
+          "type": "object",
+          "properties": {
+            "input_yEA7p3": {
+              "title": "输入框",
+              "type": "string",
+              "props": {}
+            },
+            "input_VKw5-8": {
+              "title": "输入框",
+              "type": "string",
+              "props": {}
+            }
+          },
+          "labelWidth": 120,
+          "displayType": "row"
+        }}
         extraButtons={[{ text: '去playground验证', onClick: goToFrPlayground }]}
         onChange={data => console.log('data:change', data)}
         onSchemaChange={schema => console.log('schema:change', schema)}
