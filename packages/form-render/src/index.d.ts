@@ -133,6 +133,9 @@ export interface FRProps {
   onValuesChange?: (changedValues: any, formData: any) => void;
   /** 隐藏的数据是否去掉，默认不去掉（false） */
   removeHiddenData?: boolean;
+  /** 自定义渲染函数 */
+  fieldRender?: false | ((props: any, originNode: JSX.Element) => JSX.Element);
+  objectRender?: false | ((props: any, originNode: JSX.Element) => JSX.Element);
 }
 
 declare const FR: React.FC<FRProps>;

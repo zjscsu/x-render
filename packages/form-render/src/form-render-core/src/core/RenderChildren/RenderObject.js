@@ -1,5 +1,6 @@
 import React from 'react';
 import Core from '../index';
+import { useStore2 } from '../../hooks';
 
 const RenderObject = ({
   children = [],
@@ -7,7 +8,9 @@ const RenderObject = ({
   displayType,
   hideTitle,
 }) => {
-  return (
+  const { objectRender } = useStore2();
+
+  const originNode = (
     <>
       {children.map((child, i) => {
         const FRProps = {
@@ -20,6 +23,9 @@ const RenderObject = ({
       })}
     </>
   );
+
+  if (!objectRender) return originNode;
+  return objectRender(originNode);
 };
 
 export default RenderObject;

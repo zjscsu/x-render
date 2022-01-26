@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from 'react';
-import { useHistory } from 'umi';
+import React, { useRef } from 'react';
 import Generator from 'fr-generator';
 import './index.less';
 
@@ -24,9 +23,9 @@ const Demo = () => {
               "props": {}
             },
             "input_VKw5-8": {
-              "title": "输入框",
+              "title": "日期选择",
               "type": "string",
-              "props": {}
+              "format": "date"
             }
           },
           "labelWidth": 120,

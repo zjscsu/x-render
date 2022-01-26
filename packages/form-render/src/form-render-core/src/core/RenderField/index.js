@@ -225,10 +225,9 @@ const RenderField = props => {
 
 const RenderFieldHOC = (props) => {
   const { fieldRender } = useStore2();
-  if (!fieldRender) {
-    return <RenderField {...props} />;
-  }
-  return fieldRender(props, RenderField);
+  const originNode = <RenderField {...props} />;
+  if (!fieldRender) return originNode;
+  return fieldRender(props, originNode);
 }
 
 export default RenderFieldHOC;

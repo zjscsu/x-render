@@ -1,11 +1,9 @@
-import { forwardRef, useImperativeHandle, ForwardedRef, useState } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { forwardRef, useImperativeHandle, ForwardedRef, useState, useMemo } from 'react';
 import Canvas from './components/Canvas';
 import Sidebar from './components/Sidebar';
 import Settings from './components/Settings';
 import { defaultSettings } from './settings/index';
-import { defaultGetId } from './utils/index';
+import { defaultGetId, sortable2standard, standard2sortable } from './utils/index';
 import { CanvasCtx } from './utils/context';
 import './index.less';
 
@@ -40,23 +38,34 @@ const SchemaGenerator = forwardRef((
     getErrorFields,
   }));
 
+  const sortableSchema = useMemo(() => {
+    return standard2sortable(schema);
+  }, [schema]);
+
+  const setSortableSchema = (newProperties) => {
+    setSchema(sortable2standard({
+      ...schema,
+      properties: newProperties,
+    }));
+  }
+
   return (
-    <DndProvider backend={HTML5Backend} context={window}>
-      <div className="fr-generator">
-        <Sidebar getId={getId} settings={settings} />
-        <div className="fr-generator-divider" />
-        <CanvasCtx.Provider
-          value={{
-            selected,
-            setSelected,
-          }}
-        >
-          <Canvas schema={schema} />
-        </CanvasCtx.Provider>
-        <div className="fr-generator-divider" />
-        <Settings />
-      </div>
-    </DndProvider>
+    <div className="fr-generator">
+      <Sidebar getId={getId} settings={settings} />
+      <div className="fr-generator-divider" />
+      <CanvasCtx.Provider
+        value={{
+          selected,
+          setSelected,
+          sortableSchema,
+          setSortableSchema,
+        }}
+      >
+        <Canvas schema={schema} />
+      </CanvasCtx.Provider>
+      <div className="fr-generator-divider" />
+      <Settings />
+    </div>
   )
 });
 

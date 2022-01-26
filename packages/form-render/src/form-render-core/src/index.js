@@ -52,6 +52,7 @@ function App({
   removeHiddenData = false,
   globalProps = {},
   fieldRender,
+  objectRender,
   ...rest
 }) {
   try {
@@ -189,6 +190,7 @@ function App({
       allCollapsed,
       showValidate,
       fieldRender,
+      objectRender,
     }),
     [
       displayType,
@@ -204,6 +206,7 @@ function App({
       allCollapsed,
       showValidate,
       fieldRender,
+      objectRender,
     ]
   );
 

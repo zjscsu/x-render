@@ -30,15 +30,17 @@
     "react-dom": ">=16.14.0"
   },
   "dependencies": {
-    "antd": "^4.4.2",
+    "@ant-design/icons": "^4.7.0",
+    "antd": "4.x",
+    "classnames": "^2.3.1",
     "clone": "^2.1.2",
     "copy-text-to-clipboard": "^2.2.0",
     "form-render": "1.x",
-    "moment": "^2.27.0",
     "nanoid": "^3.1.22",
-    "rc-color-picker": "^1.2.6",
-    "react-dnd": "^14.0.2",
-    "react-dnd-html5-backend": "^14.0.0",
-    "react-sortable-hoc": "^2.0.0"
+    "react-sortablejs": "^6.0.3",
+    "sortablejs": "^1.14.0"
+  },
+  "devDependencies": {
+    "@types/sortablejs": "^1.10.7"
   }
 }
