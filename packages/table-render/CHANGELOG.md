@@ -1,5 +1,21 @@
 # Changelog
 
+### 1.2.0
+
+- [+] `Search` 组件新增`searchText`和`resetText`属性，支持自定义`搜索/重置`按钮文本。
+
+### 1.1.9
+
+- [!] `SearchBtn` 宽度使用 flex 进行自适应，不再需要 `calcWidth` 计算
+
+### 1.1.8
+
+- [!] 修改 calcWidth 内部逻辑
+
+### 1.1.7
+
+- [!] 添加一些兜底逻辑
+
 ### 1.1.6
 
 - [!] 修复了 withTable 中 props 没有透传的 bug

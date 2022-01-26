@@ -11,24 +11,6 @@ export default defineConfig({
     loading: '@/docs/Loading.js',
   },
   locales: [['zh-CN', '中文']],
-  hire: {
-    title: '飞猪用户技术正寻觅前端',
-    content: `
-<p><strong>招聘团队：</strong>飞猪用户技术（拔赤）- 前端组</p>
-<p><strong>招聘层级：</strong>P5 ~ P7</p>
-<p><strong>工作城市：</strong>杭州、北京</p>
-<p><strong>面试效率：</strong>加急面试</p>
-<p><strong>团队链接：</strong></p>
-<ul>
-  <li>微信：<a href="https://weixin.sogou.com/weixin?query=Fliggy+F2E" target="_blank">Fliggy F2E</a></li>
-  <li>掘金：<a href="https://juejin.cn/user/3051900006845944" target="_blank">飞猪前端团队</a></li>
-  <li>开源：<a href="https://github.com/alibaba/form-render/" target="_blank">alibaba/x-render</a></li>
-  <li>开源：<a href="https://github.com/apache/incubator-weex-ui" target="_blank">apache/weex-ui</a></li>
-  <li>开源：<a href="https://github.com/fliggy-mobile" target="_blank">fliggy-mobile</a></li>
-</ul>`,
-    email: 'tw102972@alibaba-inc.com',
-    slogan: '想快乐的写前端吗？',
-  },
   ignoreMomentLocale: false,
   navs: [
     {
@@ -43,21 +25,25 @@ export default defineConfig({
       title: 'ChartRender',
       path: '/chart-render',
     },
+    { title: 'Schema 编辑器', path: '/generator' },
     {
       title: 'Playground',
-      children: [
-        { title: 'Playground', path: '/playground' },
-        { title: 'Schema 编辑器', path: '/tools/generator/playground' },
-      ],
+      // children: [
+      //   { title: 'Playground', path: '/playground' },
+      //   { title: 'Schema 编辑器', path: '/tools/generator/playground' },
+      // ],
       path: '/playground',
     },
     {
       title: '周边工具',
       path: '/tools',
       children: [
-        { title: 'Schema 编辑器', path: '/tools/generator' },
         { title: 'PropToSchema', path: '/tools/proptypes' },
         { title: 'VSCode 插件', path: '/tools/vscode' },
+        {
+          title: '旧版文档',
+          path: 'https://x-components.gitee.io/form-render/',
+        },
       ],
     },
     {
@@ -80,10 +66,7 @@ export default defineConfig({
         },
       ],
     },
-    {
-      title: '旧版文档',
-      path: 'https://x-components.gitee.io/form-render/',
-    },
+
     { title: 'GitHub', path: 'https://github.com/alibaba/form-render' },
   ],
   mode: 'site',

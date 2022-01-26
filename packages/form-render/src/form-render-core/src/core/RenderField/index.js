@@ -79,7 +79,7 @@ const RenderField = props => {
           name: sameNameItem.name,
           error:
             error1.length > 0 && error2.length > 0
-              ? [...error1, ...error2]
+              ? error2
               : [],
         };
       } else {

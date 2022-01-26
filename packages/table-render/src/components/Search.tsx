@@ -2,22 +2,23 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTable } from './hooks';
 import { Button } from 'antd';
 import SearchForm from 'form-render';
-import { SearchProps } from './interface';
+import { SearchProps } from '../interface';
 
 const SearchBtn = ({
   clearSearch,
   submit,
   style = {},
   className = '',
+  ...rest
 }: any) => {
   const { tableState = {} }: any = useTable();
   const { loading } = tableState;
   return (
     <div className={`flex justify-end w-100 ${className}`} style={style}>
       <Button loading={loading} className="mr" type="primary" onClick={submit}>
-        查询
+        {rest.searchText}
       </Button>
-      <Button onClick={clearSearch}>重置</Button>
+      <Button onClick={clearSearch}>{rest.resetText}</Button>
     </div>
   );
 };
@@ -27,6 +28,7 @@ const MySearchBtn = ({
   searchBtnStyle,
   searchBtnClassName,
   form,
+  ...rest
 }: any) => {
   const clearSearch = () => {
     form.resetFields();
@@ -56,6 +58,7 @@ const MySearchBtn = ({
       clearSearch={clearSearch}
       style={searchBtnStyle || {}}
       className={searchBtnClassName || ''}
+      {...rest}
     />
   );
 };
@@ -63,7 +66,13 @@ const MySearchBtn = ({
 const Search: <RecordType extends object = any>(
   props: SearchProps<RecordType>
 ) => React.ReactElement = props => {
-  const { searchBtnRender, searchBtnStyle, searchBtnClassName } = props;
+  const {
+    searchBtnRender,
+    searchBtnStyle,
+    searchBtnClassName,
+    searchText = '查询',
+    resetText = '重置',
+  } = props;
   const [formSchema, setSchema] = useState({});
   const { refresh, syncMethods, setTable, form, tableState }: any = useTable();
   const _schema = props.schema || props.propsSchema;
@@ -75,36 +84,37 @@ const Search: <RecordType extends object = any>(
   const modifiedSchema = useRef();
 
   // TODO: 重新检查一下这个逻辑
-  const calcWidth = (schema: {
-    properties: { [s: string]: unknown } | ArrayLike<unknown>;
-  }) => {
-    try {
-      let width = 100;
-      const wList = Object.values(schema.properties)
-        .filter((v: any) =>
-          v['hidden'] ? v['hidden'] !== true : v['ui:hidden'] !== true
-        )
-        .map((v: any) => (v['width'] ? v['width'] : v['ui:width']));
-      const idx = wList.lastIndexOf(undefined);
-      const effectiveList = wList
-        .slice(idx + 1)
-        .map(item => Number(item.substring(0, item.length - 1)));
-      const len = effectiveList.reduce((a, b) => {
-        const sum = a + b;
-        if (sum > 100) return Math.min(100, b);
-        return sum;
-      }, 0);
-      width = 100 - len;
-      if (width < 10) {
-        // 如果剩下太少了，就换行
-        width = 100;
-      }
-      return width + '%';
-    } catch (err) {
-      console.error(err);
-      return '100%';
-    }
-  };
+  // const calcWidth = (schema: {
+  //   properties: { [s: string]: unknown } | ArrayLike<unknown>;
+  // }) => {
+  //   try {
+  //     let width = 100;
+  //     const wList = Object.values(schema.properties)
+  //       .filter((v: any) =>
+  //         v['hidden'] ? v['hidden'] !== true : v['ui:hidden'] !== true
+  //       )
+  //       .map((v: any) => (v['width'] ? v['width'] : v['ui:width']));
+  //     const idx = wList.lastIndexOf(undefined);
+  //     const effectiveList =
+  //       wList
+  //         .slice(idx + 1)
+  //         .map(item => Number(item?.substring(0, item.length - 1))) || [];
+  //     const len = effectiveList?.reduce((a, b) => {
+  //       const sum = a + b;
+  //       if (sum > 100) return Math.min(100, b);
+  //       return sum;
+  //     }, 0);
+  //     width = 100 - len;
+  //     if (width < 10) {
+  //       // 如果剩下太少了，就换行
+  //       width = 100;
+  //     }
+  //     return width + '%';
+  //   } catch (err) {
+  //     console.error(err);
+  //     return '100%';
+  //   }
+  // };
 
   // 给schema里拼接一个buttons
   const modifySchema = () => {
@@ -119,7 +129,7 @@ const Search: <RecordType extends object = any>(
           widget: 'searchBtn',
           className: 'search-btn',
           bind: false,
-          width: calcWidth(_schema),
+          // width: calcWidth(_schema),
         };
         setSchema(curSchema);
       } catch (error) {
@@ -156,6 +166,8 @@ const Search: <RecordType extends object = any>(
     searchBtnRender,
     searchBtnStyle,
     searchBtnClassName,
+    searchText,
+    resetText,
     form,
   };
 
