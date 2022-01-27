@@ -2,12 +2,13 @@ import React from 'react';
 import Core from '../index';
 import { useStore2 } from '../../hooks';
 
-const RenderObject = ({
-  children = [],
-  dataIndex = [],
-  displayType,
-  hideTitle,
-}) => {
+const RenderObject = (props) => {
+  const {
+    children = [],
+    dataIndex = [],
+    displayType,
+    hideTitle,
+  } = props;
   const { objectRender } = useStore2();
 
   const originNode = (
@@ -25,7 +26,7 @@ const RenderObject = ({
   );
 
   if (!objectRender) return originNode;
-  return objectRender(originNode);
+  return objectRender(props, originNode);
 };
 
 export default RenderObject;

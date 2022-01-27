@@ -260,6 +260,7 @@ const CoreRender = ({
         errorFields={errorFields}
         displayType={_displayType}
         hideTitle={hideTitle}
+        fieldProps={fieldProps}
       >
         {item.children}
       </RenderObject>

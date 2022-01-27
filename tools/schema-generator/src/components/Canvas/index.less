@@ -2,6 +2,36 @@
   flex: 1;
   padding: 0 8px;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.fr-generator-operation {
+  margin-bottom: 12px;
+}
+
+.fr-generator-canvas-content {
+  flex: 1;
+  overflow: scroll;
+  position: relative;
+}
+
+.fr-generator-canvas-placeholder {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.fr-generator-canvas-empty {
+  background-color: #f6f5f6;
+  font-size: 20px;
+  color: #949394;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .flex .fr-generator-canvas-field {

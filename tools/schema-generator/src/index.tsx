@@ -3,7 +3,7 @@ import Canvas from './components/Canvas';
 import Sidebar from './components/Sidebar';
 import Settings from './components/Settings';
 import { defaultSettings } from './settings/index';
-import { defaultGetId, sortable2standard, standard2sortable } from './utils/index';
+import { defaultGetId } from './utils/index';
 import { CanvasCtx } from './utils/context';
 import './index.less';
 
@@ -26,10 +26,19 @@ const SchemaGenerator = forwardRef((
     settings = defaultSettings,
   } = props;
   const [schema, setSchema] = useState(props.defaultValue || {});
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState<string>();
 
-  const getValue = () => {};
-  const setValue = () => {};
+  const getValue = () => schema;
+  const setValue = value => {
+    if (!value || !value.properties) {
+      setSchema({
+        type: 'object',
+        properties: {},
+      })
+      return;
+    }
+    setSchema(value);
+  }
   const getErrorFields = () => {};
 
   useImperativeHandle(ref, () => ({
@@ -38,33 +47,33 @@ const SchemaGenerator = forwardRef((
     getErrorFields,
   }));
 
-  const sortableSchema = useMemo(() => {
-    return standard2sortable(schema);
-  }, [schema]);
-
-  const setSortableSchema = (newProperties) => {
-    setSchema(sortable2standard({
+  const handleSettingsChange = (newSchema) => {
+    setSchema({
       ...schema,
-      properties: newProperties,
-    }));
+      properties: {
+        ...schema.properties,
+        [selected]: newSchema
+      }
+    })
   }
 
   return (
     <div className="fr-generator">
-      <Sidebar getId={getId} settings={settings} />
+      <Sidebar settings={settings} />
       <div className="fr-generator-divider" />
       <CanvasCtx.Provider
         value={{
+          getId,
           selected,
           setSelected,
-          sortableSchema,
-          setSortableSchema,
+          schema,
+          setSchema: setValue,
         }}
       >
-        <Canvas schema={schema} />
+        <Canvas />
       </CanvasCtx.Provider>
       <div className="fr-generator-divider" />
-      <Settings />
+      <Settings selected={selected} schema={schema} onChange={handleSettingsChange} />
     </div>
   )
 });

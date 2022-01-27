@@ -17,15 +17,26 @@ const Demo = () => {
         defaultValue={{
           "type": "object",
           "properties": {
-            "input_yEA7p3": {
+            "input_vSJ_4V": {
               "title": "输入框",
               "type": "string",
               "props": {}
             },
-            "input_VKw5-8": {
+            "date_dFSZC5": {
               "title": "日期选择",
               "type": "string",
               "format": "date"
+            },
+            "object_3mMrAt": {
+              "title": "对象",
+              "type": "object",
+              "properties": {
+                "input_D5r36R": {
+                  "title": "输入框",
+                  "type": "string",
+                  "props": {}
+                }
+              }
             }
           },
           "labelWidth": 120,

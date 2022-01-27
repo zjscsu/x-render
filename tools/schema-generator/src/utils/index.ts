@@ -31,10 +31,11 @@ export const sortable2standard = schema => {
     delete schema.chosen;
     delete schema.selected;
   }
-  if (schema.type === 'object') {
+  if (schema.type === 'object' && Array.isArray(schema.properties)) {
     return {
       ...schema,
       properties: schema.properties.reduce((result, current) => {
+        if (!current) return result;
         return {
           ...result,
           [current.$id]: sortable2standard(current),
@@ -50,3 +51,13 @@ export const sortable2standard = schema => {
   }
   return schema;
 }
+
+export const mergeInOrder = (...args) => {
+  return args.reduce((result, current) => {
+    if (!current) return result;
+    return Object.keys(current).reduce((rst, key) => {
+      if (rst[key]) delete rst[key];
+      return { ...rst, [key]: current[key] };
+    }, result);
+  }, {});
+};

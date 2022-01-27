@@ -1,27 +1,42 @@
-import Element from './Element';
+import { useMemo } from 'react';
+import { ReactSortable } from 'react-sortablejs';
 import './index.less'
 
 const Sidebar = props => {
-  const { settings, getId } = props;
+  const { settings } = props;
+
+  const filteredSettings = useMemo(() => {
+    return settings.filter(item => item.show !== false).map(item => {
+      return {
+        ...item,
+        widgets: item.widgets.filter(item => item.show !== false)
+      }
+    })
+  }, [settings]);
 
   return (
     <div className="fr-generator-sidebar">
-      {settings.map((item, idx) => {
-        if (item && item.show === false) {
-          return null;
-        }
+      {filteredSettings.map((item, idx) => {
         return (
           <div key={idx} className="fr-generator-sidebar-item">
             <p className="fr-generator-sidebar-item-title">{item.title}</p>
-            <ul>
-              {item.widgets
-                .filter(item => item.show !== false)
-                .map((widget, idx) => {
-                  return (
-                    <Element getId={getId} key={idx.toString()} {...props} {...widget} />
-                  );
-                })}
-            </ul>
+            <ReactSortable
+              tag="ul"
+              list={item.widgets}
+              setList={() => {}}
+              group={{
+                name: 'fr-generator',
+                pull: 'clone',
+                put: false
+              }}
+              sort={false}
+            >
+              {item.widgets.map((widget, idx) => (
+                <li key={idx} className="fr-generator-sidebar-element">
+                  {widget.text}
+                </li>
+              ))}
+            </ReactSortable>
           </div>
         );
       })}

@@ -1,10 +1,11 @@
 import { Context, createContext, Dispatch, useContext } from 'react';
 
 interface ICanvasCtx {
+  getId?: (name: string) => string;
   selected?: string;
-  setSelected?: Dispatch<(prevState: undefined) => undefined>;
-  sortableSchema?: any;
-  setSortableSchema?: (sortableSchema: any) => any;
+  setSelected?: any;
+  schema?: any;
+  setSchema?: (schema: any) => any;
 }
 
 export const CanvasCtx: Context<ICanvasCtx> = createContext({});
