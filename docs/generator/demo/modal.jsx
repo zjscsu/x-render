@@ -13,35 +13,6 @@ const defaultValue = {
   },
 };
 
-const templates = [
-  {
-    text: '模板1',
-    name: 'something',
-    schema: {
-      title: '对象',
-      description: '这是一个对象类型',
-      type: 'object',
-      properties: {
-        inputName: {
-          title: '简单输入框',
-          type: 'string',
-        },
-        selectName: {
-          title: '单选',
-          type: 'string',
-          enum: ['a', 'b', 'c'],
-          enumNames: ['早', '中', '晚'],
-        },
-        dateName: {
-          title: '时间选择',
-          type: 'string',
-          format: 'date',
-        },
-      },
-    },
-  },
-];
-
 const Demo = () => {
   const [show, setShow] = useState(false);
   const [schema, setSchema] = useState(() => defaultValue);
@@ -69,7 +40,10 @@ const Demo = () => {
         width="90%"
         bodyStyle={{ height: '70vh' }}
       >
-        <Generator ref={genRef} defaultValue={schema} templates={templates} />
+        <Generator
+          ref={genRef}
+          defaultValue={schema}
+        />
       </Modal>
       <TextArea
         autoSize
