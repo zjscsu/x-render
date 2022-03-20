@@ -4,6 +4,8 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import FRCore from './form-render-core/src';
 import { widgets as defaultWidgets } from './widgets/antd';
 
+import Form from '../form-render-next/core/form'
+
 export { defaultWidgets as widgets };
 export {
   useForm,
@@ -11,6 +13,8 @@ export {
   createWidget,
   mapping,
 } from './form-render-core/src';
+
+
 
 const FR = ({ widgets, configProvider, ...rest }) => {
   return (

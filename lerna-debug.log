@@ -1,0 +1,14 @@
+0 silly argv {
+0 silly argv   _: [ 'ls' ],
+0 silly argv   json: true,
+0 silly argv   all: true,
+0 silly argv   a: true,
+0 silly argv   lernaVersion: '3.22.1',
+0 silly argv   '$0': '/Users/zhaolin/__CODES__/_open-source/x-render/node_modules/.bin/lerna'
+0 silly argv }
+1 notice cli v3.22.1
+2 verbose rootPath /Users/zhaolin/__CODES__/_open-source/x-render
+3 info versioning independent
+4 error JSONError: Unexpected end of JSON input while parsing near '' in packages/form-render-next/package.json
+4 error     at module.exports (/Users/zhaolin/__CODES__/_open-source/x-render/node_modules/parse-json/index.js:26:19)
+4 error     at parse (/Users/zhaolin/__CODES__/_open-source/x-render/node_modules/load-json-file/index.js:15:9)
