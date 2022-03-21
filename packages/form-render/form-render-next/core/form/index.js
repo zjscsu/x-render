@@ -11,6 +11,7 @@ import {
   processData,
   transformDataWithBind2,
 } from '../utils/processData';
+import { validateAll } from '../validator';
 
 export default class Form extends BaseForm{
   constructor(props = {}) {
