@@ -6,7 +6,6 @@ import {
   flattenSchema,
   schemaContainsExpression,
   parseAllExpression,
-  isObjType,
 } from '../utils';
 import { processData, transformDataWithBind2 } from '../utils/processData';
 import { validateAll } from '../validator';
@@ -61,10 +60,8 @@ export default class Form extends BaseForm {
             return obj;
           })
           .sort((a, b) => a.schema?.order - b.schema?.order);
-        const _simpleFlattenArr = flattenArr.filter(
-          obj => !obj.children.length
-        );
-        this.setState({ flatten, flattenArr, _simpleFlattenArr });
+        const simpleFlattenArr = flattenArr.filter(obj => !obj.children.length);
+        this.setState({ flatten, flattenArr, simpleFlattenArr });
       }
     }, [
       Proxy.reflect(this.namespace.context, 'schema'),

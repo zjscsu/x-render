@@ -67,7 +67,7 @@ export default class Store {
   /**
    * 将 flatten 转换成数组，并根据 order 排序，同时去掉非叶子节点
    */
-  _simpleFlattenArr = [];
+  simpleFlattenArr = [];
 
   /**
    * 表达式等被处理过的flatten，用于渲染
