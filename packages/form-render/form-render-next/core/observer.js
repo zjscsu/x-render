@@ -1,5 +1,5 @@
 import { isFunction } from 'lodash-es';
-import Proxy from '../proxy';
+import Proxy from './proxy';
 
 export default class Observer {
   onTrigger = () => {};

@@ -1,6 +1,6 @@
 import isFunction from 'lodash/isFunction'
 import get from 'lodash/get'
-import { isObject } from '../utils';
+import { isObject } from './utils';
 
 export default class Proxy {
   _value;
