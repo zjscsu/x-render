@@ -1,0 +1,38 @@
+<!--
+  FormRender 动态渲染组件的小程序实现
+
+  说明: TODO
+
+  使用: TODO
+
+  Demo: TODO
+
+-->
+
+<view>
+  <view a:for="{{formFields}}">
+    <!-- 基础表单组件 -->
+    <!-- TODO -->
+
+
+    <!--
+      下面表示第三方自定义组件, 表示渲染一个表单元素
+
+      一个抽象的表单元素表单元素的 props 至少要有以下几个属性:
+      1. "componentName": 需要渲染的表单项组件的名字
+      2. "value": 表单项的值
+      3. "onValueChange": 表单项组件的值变化的钩子函数
+
+      渲染表单的过程中，FormRender 将会标单项对应的 三个属性传入，
+      这个组件需要实现：
+      1. 根据 componentName , 显示对应类型的组件，
+      2. 根据 value , 修改组件的值
+      3. 在组件的数值改变的时候， 触发 onValueChange 钩子, 并把新的数值传入。
+    -->
+    <customize-form-render-component
+      componentName="{{item.componentName}}"
+      value="{{item.value}}"
+      onValueChange="test"
+    />
+  </view>
+</view>

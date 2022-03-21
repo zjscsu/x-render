@@ -1,0 +1,11 @@
+{
+  "component": true,
+  "usingComponents": {
+    "custom-component-fallback": "./customize-component-fallback/index"
+  },
+  "componentGenerics": {
+    "customize-form-render-component": {
+      "default": "./customize-component-fallback/index"
+    }
+  }
+}
