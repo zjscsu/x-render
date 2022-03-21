@@ -27,7 +27,7 @@ export default class Store {
   /**
    * 是否在提交状态
    */
-  isValidating = false; 
+  isValidating = false;
 
   /**
    * 是否开始外部校验，没有外部校验回传的场景，一直是false)
@@ -52,17 +52,27 @@ export default class Store {
   /**
    * 碰过的key（用于submit之前，判断哪些被碰过了）
    */
-  touchedKeys = []; 
+  touchedKeys = [];
 
   /**
-   * schema 的转换结构，便于处理 
+   * schema 的转换结构，便于处理
    */
-  flatten = {}; 
+  flatten = {};
+
+  /**
+   * 将 flatten 转换成数组，并根据 order 排序
+   */
+  flattenArr = [];
+
+  /**
+   * 将 flatten 转换成数组，并根据 order 排序，同时去掉非叶子节点
+   */
+  simpleFlattenArr = [];
 
   /**
    * 表达式等被处理过的flatten，用于渲染
    */
-  finalFlatten = {}; 
+  finalFlatten = {};
 
   /**
    * 是否首次加载
