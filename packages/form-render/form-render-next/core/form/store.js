@@ -12,12 +12,17 @@ export default class Store {
   /**
    * 内部错误信息
    */
-  errorFields = [];
+  innerErrorFields = [];
 
   /**
    * 外部错误信息
    */
   outErrorFields = [];
+
+  /**
+   * 合并后的内部和外部错误信息
+   */
+  errorFields = [];
 
   /**
    * 是否在提交状态

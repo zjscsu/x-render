@@ -88,7 +88,6 @@ const useForm = props => {
   // 生成一个基础结构，确保对象内的必填元素也被校验
   _data.current = useMemo(() => {
     if (schemaRef.current) {
-      console.log('===> _data.current', _data.current, schemaRef.current)
       return generateDataSkeleton(schemaRef.current, formData);
     }
     return {};

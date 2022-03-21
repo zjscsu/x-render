@@ -4,7 +4,7 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import FRCore from './form-render-core/src';
 import { widgets as defaultWidgets } from './widgets/antd';
 
-import Form from '../form-render-next/core/form'
+import '../form-render-next/core/form/useForm'
 
 export { defaultWidgets as widgets };
 export {

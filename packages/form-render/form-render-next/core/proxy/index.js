@@ -7,6 +7,10 @@ export default class Proxy {
 
   _taskQueue = [];
 
+  _key = '';
+
+  _path = '';
+
   static _store = {};
 
   /**
@@ -51,6 +55,8 @@ export default class Proxy {
     }
     
     const proxy = new Proxy(value);
+    proxy.key = attr;
+    proxy.path = `${namespace}.${attr}`;
 
     if(namespace) Proxy._store[namespace][attr] = proxy;
     else Proxy._store[attr] = proxy;
@@ -149,5 +155,21 @@ export default class Proxy {
   /** 支持重新设置 options，例如某些情况下可以先构造 Proxy 对象，需要时再延迟设置 options */
   set options(newOptions = {}) {
     this._options = newOptions;
+  }
+
+  get key() {
+    return this._key;
+  }
+
+  set key(newVal) {
+    this._key = newVal;
+  }
+
+  get path() {
+    return this._path;
+  }
+
+  set path(newVal) {
+    this._path = newVal;
   }
 }

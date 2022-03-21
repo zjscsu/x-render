@@ -1,5 +1,6 @@
 import Observer from "../observer";
 import Proxy from '../proxy';
+import { isObject } from "../utils";
 import Store from './store';
 
 export default class BaseForm extends Observer{
@@ -40,8 +41,9 @@ export default class BaseForm extends Observer{
     showValidate,
     logOnMount,
     logOnSubmit,
+    onTrigger = () => {}
   } = {}) {
-    super()
+    super({ onTrigger })
 
     this._bootstrap({
       formData,
@@ -90,6 +92,23 @@ export default class BaseForm extends Observer{
       src: this,
       target: this._store
     });
+  }
+
+  setState(states) {
+    let newState = states;
+
+    /**
+     * e.g.
+     * setState(({ errorFields }) => { errorFields })
+     */
+    if(typeof newState === 'function') {
+      newState = states(this);
+    }
+
+    if(!isObject(newState)) return;
+    Object.keys(newState).forEach((attr) => {
+      this[attr] = newState[attr];
+    })
   }
 
   syncProps(props = {}) {
