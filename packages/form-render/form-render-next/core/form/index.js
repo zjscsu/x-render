@@ -6,6 +6,7 @@ import {
   flattenSchema,
   schemaContainsExpression,
   parseAllExpression,
+  isObjType,
 } from '../utils';
 import {
   processData,
@@ -55,7 +56,17 @@ export default class Form extends BaseForm{
     this.observe(() => {
       if(this.schema && this.firstMount) {
         const flatten = flattenSchema(this.schema);
-        this.setState({ flatten })
+        const flattenArr = 
+          Object.values(clone(flatten))
+            .map((obj) => {
+              if('order' in obj.schema === false) {
+                obj.schema.order = -1;
+              }
+              return obj;
+            })
+            .sort((a, b) => a.schema?.order - b.schema?.order);
+        const _simpleFlattenArr = flattenArr.filter((obj) => !obj.children.length);
+        this.setState({ flatten, flattenArr, _simpleFlattenArr })
       }
     }, [
       Proxy.reflect(this.namespace.context, 'schema'),
