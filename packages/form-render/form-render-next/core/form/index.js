@@ -15,10 +15,10 @@ import {
 export default class Form extends BaseForm{
   constructor(props = {}) {
     super(props)
-    this._initObserve()
+    this._initObserver()
   }
 
-  _initObserve = () => {
+  _initObserver = () => {
     // 根据 schema 和 props formData 计算表单值
     this.observe(() => {
       let formData = {};

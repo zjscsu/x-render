@@ -121,8 +121,6 @@ export default class BaseForm extends Observer{
       logOnSubmit = () => {},
     } = props;
 
-    console.log('===> props', this.props)
-
     this.props.formData = formData;
     this.props.onChange = onChange;
     this.props.onValidate = onValidate;
