@@ -1,9 +1,9 @@
-import Observer from "../observer";
+import Observer from '../observer';
 import Proxy from '../proxy';
-import { isObject } from "../utils";
+import { isObject } from '../utils';
 import Store from './store';
 
-export default class BaseForm extends Observer{
+export default class BaseForm extends Observer {
   _store = Store.getStore();
 
   _props = {
@@ -15,7 +15,7 @@ export default class BaseForm extends Observer{
     logOnMount: () => {},
     /** 数据分析接口，表单提交成功时触发，获得本次表单填写的总时长 */
     logOnSubmit: () => {},
-  }
+  };
 
   /**
    * 外部通过 syncStuff 进行协议等同步
@@ -26,13 +26,13 @@ export default class BaseForm extends Observer{
     validateMessages: {},
     beforeFinish: {},
     removeHiddenData: {},
-  }
+  };
 
   _namespace = {
     store: 'FormStore',
     props: 'FormProps',
     context: 'FormContext',
-  }
+  };
 
   constructor({
     formData,
@@ -41,9 +41,9 @@ export default class BaseForm extends Observer{
     showValidate,
     logOnMount,
     logOnSubmit,
-    onTrigger = () => {}
+    onTrigger = () => {},
   } = {}) {
-    super({ onTrigger })
+    super({ onTrigger });
 
     this._bootstrap({
       formData,
@@ -64,33 +64,33 @@ export default class BaseForm extends Observer{
   _initProps(props) {
     this._props = Proxy.proxyObject({
       namespace: this.namespace.props,
-      target: props, 
+      target: props,
     });
   }
 
   _initContext() {
     this._context = Proxy.proxyObject({
-      namespace: this.namespace.context, 
-      target: this._context
+      namespace: this.namespace.context,
+      target: this._context,
     });
 
     Proxy.settleReflect({
       namespace: this.namespace.context,
       src: this,
-      target: this._context
+      target: this._context,
     });
   }
 
   _initStore() {
     this._store = Proxy.proxyObject({
-      namespace: this.namespace.store, 
-      target: this._store
+      namespace: this.namespace.store,
+      target: this._store,
     });
 
     Proxy.settleReflect({
       namespace: this.namespace.store,
       src: this,
-      target: this._store
+      target: this._store,
     });
   }
 
@@ -101,14 +101,14 @@ export default class BaseForm extends Observer{
      * e.g.
      * setState(({ errorFields }) => { errorFields })
      */
-    if(typeof newState === 'function') {
+    if (typeof newState === 'function') {
       newState = states(this);
     }
 
-    if(!isObject(newState)) return;
-    Object.keys(newState).forEach((attr) => {
+    if (!isObject(newState)) return;
+    Object.keys(newState).forEach(attr => {
       this[attr] = newState[attr];
-    })
+    });
   }
 
   syncProps(props = {}) {
@@ -134,7 +134,7 @@ export default class BaseForm extends Observer{
   }
 
   set store(newVal) {
-    this._store  = newVal;
+    this._store = newVal;
   }
 
   get props() {

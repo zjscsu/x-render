@@ -2,8 +2,8 @@ import {
   removeEmptyItemFromList,
   cleanEmpty,
   removeHiddenFromResult,
-  isObject, 
-  clone
+  isObject,
+  clone,
 } from '.';
 import { unset, get, set } from 'lodash-es';
 

@@ -18,7 +18,7 @@
     "changelog": "lerna-changelog",
     "publish": "npm run build && lerna publish -m \"chore: publish\" --no-verify-access",
     "prettier": "prettier -c --write \"docs/**/*\" \"packages/**/*\" \"tools/**/*\" \"widgets/**/*\"",
-    "prettier-next": "prettier -c --write \"packages/form-render/form-render-next/**/*\"",
+    "prettier-next": "prettier -c --write \"packages/form-render/form-render-next/**/*.js\"",
     "test": "jest",
     "test:clean": "jest --clearCache"
   },
