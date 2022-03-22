@@ -1,5 +1,0 @@
-Component({
-  props: {},
-  data: {},
-  didMount() {},
-});
