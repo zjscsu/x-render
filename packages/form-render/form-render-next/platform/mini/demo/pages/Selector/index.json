@@ -1,0 +1,7 @@
+{
+  "defaultTitle": "selector",
+  "usingComponents": {
+    "selector": "../../../widgets/selector",
+    "container": "antd-mini/es/Container/index"
+  }
+}
