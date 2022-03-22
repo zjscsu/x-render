@@ -1,0 +1,9 @@
+{
+	"defaultTitle": "form render内置组件",
+  "usingComponents": {
+    "list": "antd-mini/es/List/index",
+    "list-item": "antd-mini/es/List/ListItem/index",
+    "tag": "antd-mini/es/Tag/index",
+    "search": "antd-mini/es/SearchBar/index"
+  }
+}
