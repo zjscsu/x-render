@@ -9,7 +9,11 @@ import {
 } from '../utils';
 import { processData, transformDataWithBind2 } from '../utils/processData';
 import { validateAll } from '../validator';
-
+import {
+  mapping as defaultMapping,
+  getWidgetName,
+  extraSchemaList,
+} from '../mapping';
 export default class Form extends BaseForm {
   constructor(props = {}) {
     super(props);
@@ -52,6 +56,20 @@ export default class Form extends BaseForm {
     this.observe(() => {
       if (this.schema && this.firstMount) {
         const flatten = flattenSchema(this.schema);
+        // 计算组件名
+        Object.values(flatten).forEach(obj => {
+          if (!obj.children.length) {
+            const widgetName = this.getWidgetName(obj.schema, this.mapping);
+            const extraSchema = extraSchemaList[widgetName];
+            obj.schema.widget = widgetName;
+            obj.schema = {
+              ...obj.schema,
+              ...extraSchema,
+            };
+          }
+        });
+
+        // 将协议树转换为数组，方便某些场景下（如小程序）直接进行渲染而不用进行递归
         const flattenArr = Object.values(clone(flatten))
           .map(obj => {
             if ('order' in obj.schema === false) {
@@ -60,11 +78,15 @@ export default class Form extends BaseForm {
             return obj;
           })
           .sort((a, b) => a.schema?.order - b.schema?.order);
+
+        // 协议数组进一步简化，只保留叶子节点（最终将会被渲染的节点）适用于某些极简场景（如不考虑父级嵌套的样式）
         const simpleFlattenArr = flattenArr.filter(obj => !obj.children.length);
         this.setState({ flatten, flattenArr, simpleFlattenArr });
       }
     }, [
       Proxy.reflect(this.namespace.context, 'schema'),
+      Proxy.reflect(this.namespace.context, 'mapping'),
+      Proxy.reflect(this.namespace.context, 'widgets'),
       Proxy.reflect(this.namespace.store, 'firstMount'),
     ]);
 
@@ -100,6 +122,29 @@ export default class Form extends BaseForm {
       Proxy.reflect(this.namespace.store, 'formData'),
       Proxy.reflect(this.namespace.store, 'firstMount'),
     ]);
+  };
+
+  // 获取组件名
+  getWidgetName = (schema, mapping) => {
+    let widgetName = getWidgetName(schema, mapping);
+    const readOnly =
+      this.readOnly !== undefined ? this.readOnly : schema.readOnly;
+    const customName = schema.widget || schema['ui:widget'];
+    const readOnlyName = schema.readOnlyWidget || 'html';
+
+    if (customName && this.widgets[customName]) {
+      widgetName = customName;
+    }
+
+    if (readOnly && !isObjType(schema) && !isListType(schema)) {
+      widgetName = readOnlyName;
+    }
+
+    if (!widgetName) {
+      widgetName = 'input';
+    }
+
+    return widgetName;
   };
 
   // All form methods are down here ----------------------------------------------------------------
@@ -172,12 +217,19 @@ export default class Form extends BaseForm {
     validateMessages,
     beforeFinish,
     removeHiddenData,
+    mapping = {},
+    widgets = {},
+    readOnly = false,
   }) => {
     this.schema = schema;
     this.locale = locale;
     this.validateMessages = validateMessages;
     this.beforeFinish = beforeFinish;
     this.removeHiddenData = removeHiddenData;
+    // 以下为新增的同步属性
+    this.mapping = { ...defaultMapping, ...mapping };
+    this.widgets = widgets;
+    this.readOnly = readOnly;
   };
 
   setSchema = settings => {

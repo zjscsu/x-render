@@ -1,0 +1,27 @@
+<view class="demo-selector">
+  <container 
+    title="基础组件selector"
+    image="{{imageUrl}}"
+  >
+    <selector 
+      title="单选"
+      value="{{value}}"
+      items="{{items1}}"
+      onChange="onChange"
+    />
+    <selector 
+      title="多选"
+      value="{{multiValue}}"
+      items="{{items1}}"
+      multiple="{{true}}"
+      onChange="onMultiChange"
+    />
+  </container>
+
+  <view class="demo-selector-result">  
+    单选值：{{value}}
+  </view>
+  <view class="demo-selector-result">  
+    多选值：{{multiValue}}
+  </view>
+</view>

@@ -26,6 +26,9 @@ export default class BaseForm extends Observer {
     validateMessages: {},
     beforeFinish: {},
     removeHiddenData: {},
+    mapping: {},
+    widgets: {},
+    readOnly: false,
   };
 
   _namespace = {

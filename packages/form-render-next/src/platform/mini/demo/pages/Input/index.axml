@@ -1,0 +1,21 @@
+<view class="demo-input">
+  <container 
+    title="基础组件input"
+    image="{{imageUrl}}"
+  >
+    <view class="demo-input-container">  
+      <label class="demo-input-container-label">有默认值</label>
+      <view class="demo-input-class">
+        <input 
+          placeholder="请输入内容"
+          onChange="onChange"
+          onClear="onClear"
+        />
+      </view>
+    </view>
+  </container>
+
+  <view class="demo-input-result">  
+    input值：{{value}}
+  </view>
+</view>
