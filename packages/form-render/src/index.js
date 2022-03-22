@@ -12,8 +12,6 @@ export {
   mapping,
 } from './form-render-core/src';
 
-
-
 const FR = ({ widgets, configProvider, ...rest }) => {
   return (
     <ConfigProvider locale={zhCN} {...configProvider}>
