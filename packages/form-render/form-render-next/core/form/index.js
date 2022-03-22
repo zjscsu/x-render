@@ -1,35 +1,37 @@
-import { sortedUniqBy, clone, set } from 'lodash-es'
-import BaseForm from "./base";
+import { sortedUniqBy, clone, set } from 'lodash-es';
+import BaseForm from './base';
 import Proxy from '../proxy';
-import { 
-  generateDataSkeleton, 
+import {
+  generateDataSkeleton,
   flattenSchema,
   schemaContainsExpression,
   parseAllExpression,
 } from '../utils';
+import { processData, transformDataWithBind2 } from '../utils/processData';
+import { validateAll } from '../validator';
 import {
-  processData,
-  transformDataWithBind2,
-} from '../utils/processData';
-
-export default class Form extends BaseForm{
+  mapping as defaultMapping,
+  getWidgetName,
+  extraSchemaList,
+} from '../mapping';
+export default class Form extends BaseForm {
   constructor(props = {}) {
-    super(props)
-    this._initObserver()
+    super(props);
+    this._initObserver();
   }
 
   _initObserver = () => {
     // 根据 schema 和 props formData 计算表单值
     this.observe(() => {
       let formData = {};
-      if(this.schema) {
-        formData = generateDataSkeleton(this.schema, this.props.formData)
-      };
-      this.setState({ formData })
+      if (this.schema) {
+        formData = generateDataSkeleton(this.schema, this.props.formData);
+      }
+      this.setState({ formData });
     }, [
       Proxy.reflect(this.namespace.props, 'formData'),
       Proxy.reflect(this.namespace.context, 'schema'),
-    ])
+    ]);
 
     // 进行内外部错误合并
     this.observe(() => {
@@ -40,24 +42,52 @@ export default class Form extends BaseForm{
         this.outErrorFields.length > 0
       ) {
         const mergeErrors = [...this.innerErrorFields, ...this.outErrorFields];
-        errorFields =  sortedUniqBy(mergeErrors, item => item.name);
+        errorFields = sortedUniqBy(mergeErrors, item => item.name);
       } else {
         errorFields = this.innerErrorFields;
       }
-      this.setState({ errorFields })
+      this.setState({ errorFields });
     }, [
       Proxy.reflect(this.namespace.store, 'innerErrorFields'),
       Proxy.reflect(this.namespace.store, 'outErrorFields'),
-    ])
+    ]);
 
     // 扁平化处理 schema
     this.observe(() => {
-      if(this.schema && this.firstMount) {
+      if (this.schema && this.firstMount) {
         const flatten = flattenSchema(this.schema);
-        this.setState({ flatten })
+        // 计算组件名
+        Object.values(flatten).forEach(obj => {
+          if (!obj.children.length) {
+            const widgetName = this.getWidgetName(obj.schema, this.mapping);
+            const extraSchema = extraSchemaList[widgetName];
+            obj.schema.widget = widgetName;
+            obj.schema = {
+              ...obj.schema,
+              ...extraSchema,
+            };
+          }
+        });
+
+        // 将协议树转换为数组，方便某些场景下（如小程序）直接进行渲染而不用进行递归
+        const flattenArr = Object.values(clone(flatten))
+          .map(obj => {
+            if ('order' in obj.schema === false) {
+              obj.schema.order = -1;
+            }
+            return obj;
+          })
+          .sort((a, b) => a.schema?.order - b.schema?.order);
+
+        // 协议数组进一步简化，只保留叶子节点（最终将会被渲染的节点）适用于某些极简场景（如不考虑父级嵌套的样式）
+        const simpleFlattenArr = flattenArr.filter(obj => !obj.children.length);
+        console.log('===> simpleFlattenArr', simpleFlattenArr);
+        this.setState({ flatten, flattenArr, simpleFlattenArr });
       }
     }, [
       Proxy.reflect(this.namespace.context, 'schema'),
+      Proxy.reflect(this.namespace.context, 'mapping'),
+      Proxy.reflect(this.namespace.context, 'widgets'),
       Proxy.reflect(this.namespace.store, 'firstMount'),
     ]);
 
@@ -87,27 +117,50 @@ export default class Form extends BaseForm{
         }
       });
 
-      this.setState({ finalFlatten: newFlatten })
+      this.setState({ finalFlatten: newFlatten });
     }, [
       Proxy.reflect(this.namespace.store, 'flatten'),
       Proxy.reflect(this.namespace.store, 'formData'),
       Proxy.reflect(this.namespace.store, 'firstMount'),
-    ])
-  }
+    ]);
+  };
+
+  // 获取组件名
+  getWidgetName = (schema, mapping) => {
+    let widgetName = getWidgetName(schema, mapping);
+    const readOnly =
+      this.readOnly !== undefined ? this.readOnly : schema.readOnly;
+    const customName = schema.widget || schema['ui:widget'];
+    const readOnlyName = schema.readOnlyWidget || 'html';
+
+    if (customName && this.widgets[customName]) {
+      widgetName = customName;
+    }
+
+    if (readOnly && !isObjType(schema) && !isListType(schema)) {
+      widgetName = readOnlyName;
+    }
+
+    if (!widgetName) {
+      widgetName = 'input';
+    }
+
+    return widgetName;
+  };
 
   // All form methods are down here ----------------------------------------------------------------
   // 两个兼容 0.x 的函数
-  _setData = (data) => {
+  _setData = data => {
     const { onChange } = this.props;
     if (typeof onChange === 'function') {
       onChange(data);
     } else {
       this.setState({ formData: data });
     }
-  }
+  };
 
   // Allow function to get the old value
-  _setErrors = (errors) => {
+  _setErrors = errors => {
     const { onValidate } = this.props;
     if (typeof onValidate === 'function') {
       const oldFormatErrors = errors ? errors.map(item => item.name) : [];
@@ -120,13 +173,13 @@ export default class Form extends BaseForm{
     } else {
       this.setState({ errorFields: errors });
     }
-  }
+  };
 
-  setFirstMount = (value) => {
+  setFirstMount = value => {
     this.setState({ firstMount: value });
   };
 
-  touchKey = (key) => {
+  touchKey = key => {
     if (this.touchedKeys.indexOf(key) > -1) {
       return;
     }
@@ -134,22 +187,22 @@ export default class Form extends BaseForm{
     this.setState({ touchedKeys: newKeyList });
   };
 
-  removeTouched = (key) => {
+  removeTouched = key => {
     let newTouch = this.touchedKeys.filter(item => {
       return item.indexOf(key) === -1;
     });
     this.setState({ touchedKeys: newTouch });
   };
 
-  changeTouchedKeys = (newTouchedKeys) => {
+  changeTouchedKeys = newTouchedKeys => {
     this.setState({ touchedKeys: newTouchedKeys });
   };
 
-  setEditing = (isEditing) => {
+  setEditing = isEditing => {
     this.setState({ isEditing });
   };
 
-  onItemChange (path, value) {
+  onItemChange(path, value) {
     if (typeof path !== 'string') return;
     if (path === '#') {
       this._setData({ ...value });
@@ -157,7 +210,7 @@ export default class Form extends BaseForm{
     }
     set(this.formData, path, value);
     this._setData({ ...this.formData });
-  };
+  }
 
   syncStuff = ({
     schema,
@@ -165,15 +218,22 @@ export default class Form extends BaseForm{
     validateMessages,
     beforeFinish,
     removeHiddenData,
+    mapping = {},
+    widgets = {},
+    readOnly = false,
   }) => {
     this.schema = schema;
     this.locale = locale;
     this.validateMessages = validateMessages;
     this.beforeFinish = beforeFinish;
     this.removeHiddenData = removeHiddenData;
-  }
+    // 以下为新增的同步属性
+    this.mapping = { ...defaultMapping, ...mapping };
+    this.widgets = widgets;
+    this.readOnly = readOnly;
+  };
 
-  setSchema = (settings) => {
+  setSchema = settings => {
     const newFlatten = clone(this.flatten);
     try {
       Object.keys(settings).forEach(path => {
@@ -250,11 +310,7 @@ export default class Form extends BaseForm{
   };
 
   getValues = () => {
-    return processData(
-      this.formData,
-      this.finalFlatten,
-      this.removeHiddenData
-    );
+    return processData(this.formData, this.finalFlatten, this.removeHiddenData);
   };
 
   setValues = newFormData => {
@@ -263,7 +319,11 @@ export default class Form extends BaseForm{
   };
 
   submit = () => {
-    this.setState({ isValidating: true, allTouched: true, isSubmitting: false });
+    this.setState({
+      isValidating: true,
+      allTouched: true,
+      isSubmitting: false,
+    });
     //  https://formik.org/docs/guides/form-submission
     return validateAll({
       formData: this.formData,
@@ -283,11 +343,7 @@ export default class Form extends BaseForm{
 
         if (typeof this.beforeFinish === 'function') {
           return Promise.resolve(
-            processData(
-              this.formData,
-              this.finalFlatten,
-              this.removeHiddenData
-            )
+            processData(this.formData, this.finalFlatten, this.removeHiddenData)
           ).then(res => {
             this.setState({
               isValidating: true,
@@ -300,11 +356,7 @@ export default class Form extends BaseForm{
         }
 
         return Promise.resolve(
-          processData(
-            this.formData,
-            this.finalFlatten,
-            this.removeHiddenData
-          )
+          processData(this.formData, this.finalFlatten, this.removeHiddenData)
         ).then(res => {
           this.setState({
             isValidating: false,
@@ -337,7 +389,7 @@ export default class Form extends BaseForm{
       outsideValidating: false,
       isSubmitting: true,
     });
-  }
+  };
 
   endSubmitting = () => {
     this.setState({
@@ -345,5 +397,5 @@ export default class Form extends BaseForm{
       isValidating: false,
       outsideValidating: false,
     });
-  }
+  };
 }

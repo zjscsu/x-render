@@ -29,6 +29,8 @@ interface SchemaBase {
   readOnly: boolean | string;
   /** 是否隐藏，隐藏的字段不会在 formData 里透出，支持 `'{{ formData.xxx === "" }}'` 形式的表达式 */
   hidden: boolean | string;
+  /** 执行表单元素的顺序，在默认排序方式不满足时启用 */
+  order: string;
   displayType: 'row' | 'column';
   width: string;
   labelWidth: number | string;

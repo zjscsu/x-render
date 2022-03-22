@@ -1,6 +1,6 @@
-import isFunction from 'lodash/isFunction'
-import get from 'lodash/get'
-import { isObject } from '../utils';
+import isFunction from 'lodash/isFunction';
+import get from 'lodash/get';
+import { isObject } from './utils';
 
 export default class Proxy {
   _value;
@@ -20,17 +20,13 @@ export default class Proxy {
     return target instanceof Proxy;
   }
 
-  /** 
-   * 针对对象进行批量代理 
+  /**
+   * 针对对象进行批量代理
    */
-  static proxyObject({
-    namespace, 
-    src = {},
-    target = {}, 
-  }) {
-    if(!target || !isObject(target) || !isObject(src)) return;
+  static proxyObject({ namespace, src = {}, target = {} }) {
+    if (!target || !isObject(target) || !isObject(src)) return;
 
-    Object.keys(target).forEach((attr) => {
+    Object.keys(target).forEach(attr => {
       const proxy = Proxy.insertProxyStore(namespace, attr, target[attr]);
       Object.defineProperty(src, attr, {
         enumerable: true,
@@ -39,7 +35,7 @@ export default class Proxy {
         },
         set(newVal) {
           proxy.setValue(newVal);
-        }
+        },
       });
     });
 
@@ -50,15 +46,15 @@ export default class Proxy {
    * 向 proxy 仓库中插入 store 对象，不传入命名空间因子表示为全局存放
    */
   static insertProxyStore(namespace, attr, value) {
-    if(namespace && !Proxy._store[namespace]) {
+    if (namespace && !Proxy._store[namespace]) {
       Proxy._store[namespace] = {};
     }
-    
+
     const proxy = new Proxy(value);
     proxy.key = attr;
     proxy.path = `${namespace}.${attr}`;
 
-    if(namespace) Proxy._store[namespace][attr] = proxy;
+    if (namespace) Proxy._store[namespace][attr] = proxy;
     else Proxy._store[attr] = proxy;
 
     return proxy;
@@ -68,21 +64,17 @@ export default class Proxy {
    * 通过 “反射” 的形式获取到对象上的原始 proxy 对象
    */
   static reflect(namespace = '', attr) {
-    if(!namespace) return get(Proxy._store, attr);
+    if (!namespace) return get(Proxy._store, attr);
     return get(Proxy._store, `${namespace}.${attr}`);
   }
 
   /**
    * 提供将 proxy 对象集映射到普通对象上的方法，方便进行 getter/setter 的定义
    */
-  static settleReflect({
-    namespace, 
-    src = {}, 
-    target = {}, 
-  }) {
-    if(!target || !isObject(target) || !isObject(src)) return;
-  
-    Object.keys(target).forEach((attr) => {
+  static settleReflect({ namespace, src = {}, target = {} }) {
+    if (!target || !isObject(target) || !isObject(src)) return;
+
+    Object.keys(target).forEach(attr => {
       Object.defineProperty(src, attr, {
         enumerable: true,
         get() {
@@ -90,9 +82,9 @@ export default class Proxy {
         },
         set(newVal) {
           return Proxy.reflect(namespace, attr)?.setValue(newVal);
-        }
-      })
-    })
+        },
+      });
+    });
 
     return src;
   }
@@ -100,15 +92,15 @@ export default class Proxy {
   constructor(initValue, options = {}) {
     this._value = initValue;
     this._options = options;
-    this.pushTask(options?.onValueChange)
+    this.pushTask(options?.onValueChange);
   }
 
   /**
    * 一个对象可以在多个地方，被多次监听属性
    */
   pushTask(callback = () => {}) {
-    if(isFunction(callback)) {
-      this._taskQueue.push(callback)
+    if (isFunction(callback)) {
+      this._taskQueue.push(callback);
     }
   }
 
@@ -116,7 +108,7 @@ export default class Proxy {
    * 触发事件监听
    */
   trigger() {
-    this._taskQueue.forEach((fn) => fn());
+    this._taskQueue.forEach(fn => fn());
   }
 
   getValue() {
@@ -134,7 +126,7 @@ export default class Proxy {
    * 不会引起变更监听的 setting，直接修改私有属性
    */
   setValueSilence(newVal) {
-    this._value = newVal
+    this._value = newVal;
   }
 
   get value() {
@@ -142,7 +134,7 @@ export default class Proxy {
   }
 
   set value(newVal) {
-    if(newVal !== this._value) {
+    if (newVal !== this._value) {
       this._value = newVal;
       this.trigger();
     }
