@@ -93,7 +93,6 @@ const useForm = props => {
     return {};
   }, [JSON.stringify(formData), JSON.stringify(schemaRef.current)]);
 
-
   _allErrors.current = useMemo(() => {
     if (
       Array.isArray(_errorFields.current) &&
