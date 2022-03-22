@@ -2,5 +2,6 @@
 export default {
   esm: 'rollup',
   disableTypeCheck: false, // 如果出了问题，这个可以改成true
-  cjs: { type: 'babel', lazy: true },
+  // cjs: { type: 'babel', lazy: true },
+  cjs: 'babel',
 };

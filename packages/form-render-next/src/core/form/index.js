@@ -81,7 +81,6 @@ export default class Form extends BaseForm {
 
         // 协议数组进一步简化，只保留叶子节点（最终将会被渲染的节点）适用于某些极简场景（如不考虑父级嵌套的样式）
         const simpleFlattenArr = flattenArr.filter(obj => !obj.children.length);
-        console.log('===> simpleFlattenArr', simpleFlattenArr);
         this.setState({ flatten, flattenArr, simpleFlattenArr });
       }
     }, [
