@@ -44,9 +44,8 @@ export default class BaseForm extends Observer {
     showValidate,
     logOnMount,
     logOnSubmit,
-    onTrigger = () => {},
   } = {}) {
-    super({ onTrigger });
+    super();
 
     this._bootstrap({
       formData,

@@ -2,13 +2,13 @@ import { isFunction } from 'lodash-es';
 import Proxy from './proxy';
 
 export default class Observer {
-  onTrigger = () => {};
+  _onTrigger = () => {};
 
-  constructor({ onTrigger }) {
-    if (isFunction(onTrigger)) {
-      this.onTrigger = onTrigger;
+  _setTrigger = (trigger) => {
+    if(isFunction(trigger)) {
+      this._onTrigger = trigger;
     }
-  }
+  } 
 
   /**
    * 获取待观测的 Proxy 对象 value
@@ -48,7 +48,7 @@ export default class Observer {
         // 对于一个对象多次监听的情形，每次监听都会将参数列表传入
         callback(...observeArgs);
         // 通知外部属性变更钩子做回调
-        this.onTrigger(triggerArgs);
+        this._onTrigger(triggerArgs);
       };
 
       Proxy.isProxy(target) && target.pushTask(triggerFn);
