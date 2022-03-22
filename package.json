@@ -22,7 +22,8 @@
     "prettier": "prettier -c --write \"docs/**/*\" \"packages/**/*\" \"tools/**/*\" \"widgets/**/*\"",
     "prettier-next": "prettier -c --write \"packages/form-render/src/**/*.js\"",
     "test": "jest",
-    "test:clean": "jest --clearCache"
+    "test:clean": "jest --clearCache",
+    "transform": "node packages/form-render-next/src/scripts/transform.js"
   },
   "devDependencies": {
     "@types/jest": "^27.0.3",
