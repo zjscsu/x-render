@@ -16,7 +16,7 @@ import AsyncValidator from 'async-validator';
 import { get, merge } from 'lodash-es';
 
 export default class Validator {
-  static getValidator() {
+  static create() {
     return new Validator();
   }
 

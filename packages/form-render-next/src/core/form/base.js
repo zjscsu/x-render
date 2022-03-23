@@ -1,46 +1,37 @@
 import Observer from '../observer';
 import Proxy from '../proxy';
 import { isObject } from '../utils';
-import Store from './store';
+import State from './state';
+import Context from './context';
+import Props from './props';
 import Validator from '../validator';
+import Store from '../store';
 
 export default class BaseForm extends Observer {
-  _store = Store.getStore();
+  _validator = Validator.create();
 
-  _validator = Validator.getValidator();
+  _state = State.create();
 
-  _props = {
-    formData: {},
-    onChange: () => {},
-    onValidate: () => {},
-    showValidate: () => {},
-    /** 数据分析接口，表单展示完成渲染时触发 */
-    logOnMount: () => {},
-    /** 数据分析接口，表单提交成功时触发，获得本次表单填写的总时长 */
-    logOnSubmit: () => {},
-  };
+  _props = Props.create();
 
   /**
    * 外部通过 syncStuff 进行协议等同步
    */
-  _context = {
-    schema: {},
-    locale: {},
-    validateMessages: {},
-    beforeFinish: {},
-    removeHiddenData: {},
-    mapping: {},
-    widgets: {},
-    readOnly: false,
-  };
+  _context = Context.create();
 
   _namespace = {
-    store: 'FormStore',
+    state: 'FormState',
     props: 'FormProps',
     context: 'FormContext',
   };
 
+  /**
+   * 存放全局所有表单对象的引用
+   */
+  _store = {};
+
   constructor({
+    id,
     formData,
     onChange,
     onValidate,
@@ -51,6 +42,7 @@ export default class BaseForm extends Observer {
     super();
 
     this._bootstrap({
+      id,
       formData,
       onChange,
       onValidate,
@@ -63,7 +55,7 @@ export default class BaseForm extends Observer {
   _bootstrap(props) {
     this._initProps(props);
     this._initContext();
-    this._initStore();
+    this._initState();
   }
 
   _initProps(props) {
@@ -86,16 +78,16 @@ export default class BaseForm extends Observer {
     });
   }
 
-  _initStore() {
-    this._store = Proxy.proxyObject({
-      namespace: this.namespace.store,
-      target: this._store,
+  _initState() {
+    this._state = Proxy.proxyObject({
+      namespace: this.namespace.state,
+      target: this._state,
     });
 
     Proxy.settleReflect({
-      namespace: this.namespace.store,
+      namespace: this.namespace.state,
       src: this,
-      target: this._store,
+      target: this._state,
     });
   }
 
@@ -134,12 +126,21 @@ export default class BaseForm extends Observer {
     this.props.logOnSubmit = logOnSubmit;
   }
 
-  get store() {
-    return this._store;
+  /**
+   * 回收存放在全局的表单实例
+   */
+  destroy = () => {
+    if(this.store instanceof Store) {
+      this.store.destroy(this.id);
+    }
   }
 
-  set store(newVal) {
-    this._store = newVal;
+  get state() {
+    return this._state;
+  }
+
+  set state(newVal) {
+    this._state = newVal;
   }
 
   get props() {
@@ -164,5 +165,13 @@ export default class BaseForm extends Observer {
 
   set validator(newVal) {
     this._validator = newVal;
+  }
+
+  get store() {
+    return this._store;
+  }
+
+  set store(newVal) {
+    this._store = newVal;
   }
 }
