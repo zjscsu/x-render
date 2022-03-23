@@ -28,7 +28,7 @@ export default class BaseForm extends Observer {
   /**
    * 存放全局所有表单对象的引用
    */
-  _store = {};
+  _store = null;
 
   /**
    * 用来全局标识表单的 ID，从 0 开始自增，在用户 useForm 时不显式传入 id 的时候也会作为默认值
@@ -139,6 +139,15 @@ export default class BaseForm extends Observer {
   destroy = () => {
     if(this.store instanceof Store) {
       this.store.destroy(this.id);
+    }
+  }
+
+  /**
+   * 回收存放在全局的表单实例并删除 key
+   */
+  delete = () => {
+    if(this.store instanceof Store) {
+      this.store.delete(this.id);
     }
   }
 
