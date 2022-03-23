@@ -2,9 +2,12 @@ import Observer from '../observer';
 import Proxy from '../proxy';
 import { isObject } from '../utils';
 import Store from './store';
+import Validator from '../validator';
 
 export default class BaseForm extends Observer {
   _store = Store.getStore();
+
+  _validator = Validator.getValidator();
 
   _props = {
     formData: {},
@@ -153,5 +156,13 @@ export default class BaseForm extends Observer {
 
   set namespace(newVal) {
     this._namespace = newVal;
+  }
+
+  get validator() {
+    return this._validator;
+  }
+
+  set validator(newVal) {
+    this._validator = newVal;
   }
 }
