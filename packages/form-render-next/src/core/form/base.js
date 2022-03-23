@@ -30,6 +30,11 @@ export default class BaseForm extends Observer {
    */
   _store = {};
 
+  /**
+   * 用来全局标识表单的 ID，从 0 开始自增，在用户 useForm 时不显式传入 id 的时候也会作为默认值
+   */
+  static $id = 0;
+
   constructor({
     id,
     formData,
@@ -41,8 +46,10 @@ export default class BaseForm extends Observer {
   } = {}) {
     super();
 
+    BaseForm.$id++;
+
     this._bootstrap({
-      id,
+      id: id || BaseForm.$id,
       formData,
       onChange,
       onValidate,
