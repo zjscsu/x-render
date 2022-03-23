@@ -25,6 +25,11 @@ export default class Store {
     this.mapping[key] = null;
   }
 
+  delete = (key) => {
+    this.destroy(key);
+    delete this.mapping[key];
+  }
+
   get mapping() {
     return this._mapping;
   }
