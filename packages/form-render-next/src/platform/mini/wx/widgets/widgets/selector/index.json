@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "defaultTitle": "form render内置组件",
+  "styleIsolation": "shared",
+  "usingComponents": {
+    "selector": "../../../../../../../../npm_modules/antd-mini/es/Selector/index"
+  }
+}

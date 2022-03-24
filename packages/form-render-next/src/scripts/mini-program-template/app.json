@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/Input/index",
+    "pages/Picker/index",
     "pages/Selector/index"
   ],
   "window": {

@@ -1,0 +1,16 @@
+<wxs
+  module="__dp_f"
+  src="../../../../../../../../npm_modules/@ali/dslplus-mini-compiler-helper/safescript/property-type.wxs"
+></wxs>
+<view>
+  <input
+    data-:dp:a="{{({ placeholder: __dp_f(placeholder), maxLength: __dp_f(maxLength), disabled: __dp_f(disabled) })}}"
+    data-:dp:b="{{$id}}"
+    :placeholder="{{placeholder}}"
+    :maxLength="{{maxLength}}"
+    :disabled="{{disabled}}"
+    :onChange="onInputChange"
+    :onClear="onInputClear"
+  ></input>
+  aa
+</view>

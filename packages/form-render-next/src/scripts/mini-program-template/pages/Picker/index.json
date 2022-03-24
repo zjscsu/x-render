@@ -1,0 +1,7 @@
+{
+  "defaultTitle": "input",
+  "usingComponents": {
+    "picker": "/packages/form-render-next/src/platform/mini/alipay/widgets/picker",
+    "container": "antd-mini/es/Container/index"
+  }
+}
