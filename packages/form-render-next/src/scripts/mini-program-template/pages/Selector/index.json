@@ -1,7 +1,7 @@
 {
   "defaultTitle": "selector",
   "usingComponents": {
-    "selector": "/packages/form-render-next/src/platform/mini/alipay/widgets/selector",
+    "selector": "/components/selector",
     "container": "antd-mini/es/Container/index"
   }
 }

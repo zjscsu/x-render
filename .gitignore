@@ -12,11 +12,14 @@
 /dist
 /lib
 /docs-dist
+__wx__
+
 # misc
 .idea
 .DS_Store
 .idea
 .vscode
+.mini-ide
 
 # umi
 .umi
@@ -48,5 +51,3 @@ node_modules
 old-doc
 test.json
 /docs/guide/.test
-
-.mini-ide/

@@ -1,7 +1,0 @@
-{
-  "component": true,
-  "styleIsolation": "shared",
-  "usingComponents": {
-    "picker": "../../../../../../../../npm_modules/antd-mini/es/Picker/index"
-  }
-}
