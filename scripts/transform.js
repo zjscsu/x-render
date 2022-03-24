@@ -7,7 +7,7 @@ const args = process.env;
 const formRenderNextPath = './packages/form-render-next';
 
 const alipayWidgetsPath = path.join(formRenderNextPath, './src/platform/mini/alipay/widgets');
-const alipayMiniProgramPath = path.join(formRenderNextPath, './src/scripts/mini-program-template');
+const alipayMiniProgramPath = path.join(formRenderNextPath, './scripts/mini-program-template');
 
 const wxNpmModulesLibPath = path.join(formRenderNextPath, './lib/platform/mini/wx/npm_modules');
 const wxWidgetsLibPath = path.join(formRenderNextPath, './lib/platform/mini/wx/widgets');

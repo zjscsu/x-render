@@ -1,0 +1,8 @@
+{
+	"defaultTitle": "form render内置组件",
+  "usingComponents": {
+    "list": "../../../../src/platform/mini/alipay/widgets/input/index",
+    "list1": "../../../../src/platform/mini/alipay/widgets/input/index",
+    "list2": "../../../../src/platform/mini/alipay/widgets/input/index"
+  }
+}

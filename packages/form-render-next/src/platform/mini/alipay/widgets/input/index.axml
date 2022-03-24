@@ -6,4 +6,5 @@
     onChange="onInputChange"
     onClear="onInputClear"
   />
+  123
 </view>
