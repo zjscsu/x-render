@@ -12,8 +12,13 @@ Page({
                 path: '/pages/Input/index',
               },
               {
-                name: 'Selector',
+                name: 'Picker',
                 nameZN: '选择框',
+                path: '/pages/Picker/index',
+              },
+              {
+                name: 'Selector',
+                nameZN: '选择器',
                 path: '/pages/Selector/index',
               },
             ]

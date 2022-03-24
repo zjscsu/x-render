@@ -14,6 +14,7 @@ import {
   getWidgetName,
   extraSchemaList,
 } from '../mapping';
+
 export default class Form extends BaseForm {
   constructor(props = {}) {
     super(props);
@@ -48,8 +49,8 @@ export default class Form extends BaseForm {
       }
       this.setState({ errorFields });
     }, [
-      Proxy.reflect(this.namespace.store, 'innerErrorFields'),
-      Proxy.reflect(this.namespace.store, 'outErrorFields'),
+      Proxy.reflect(this.namespace.state, 'innerErrorFields'),
+      Proxy.reflect(this.namespace.state, 'outErrorFields'),
     ]);
 
     // 扁平化处理 schema
@@ -87,7 +88,7 @@ export default class Form extends BaseForm {
       Proxy.reflect(this.namespace.context, 'schema'),
       Proxy.reflect(this.namespace.context, 'mapping'),
       Proxy.reflect(this.namespace.context, 'widgets'),
-      Proxy.reflect(this.namespace.store, 'firstMount'),
+      Proxy.reflect(this.namespace.state, 'firstMount'),
     ]);
 
     // 统一的处理expression
@@ -118,9 +119,9 @@ export default class Form extends BaseForm {
 
       this.setState({ finalFlatten: newFlatten });
     }, [
-      Proxy.reflect(this.namespace.store, 'flatten'),
-      Proxy.reflect(this.namespace.store, 'formData'),
-      Proxy.reflect(this.namespace.store, 'firstMount'),
+      Proxy.reflect(this.namespace.state, 'flatten'),
+      Proxy.reflect(this.namespace.state, 'formData'),
+      Proxy.reflect(this.namespace.state, 'firstMount'),
     ]);
   };
 

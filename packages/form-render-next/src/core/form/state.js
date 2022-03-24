@@ -1,4 +1,4 @@
-export default class Store {
+export default class State {
   /**
    * 表单数据
    */
@@ -80,9 +80,9 @@ export default class Store {
   firstMount = true;
 
   /**
-   * 构造 Store 实例
+   * 构造 State 实例
    */
-  static getStore() {
-    return new Store();
+  static create() {
+    return new State();
   }
 }

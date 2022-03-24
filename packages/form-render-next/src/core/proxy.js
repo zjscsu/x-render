@@ -11,7 +11,7 @@ export default class Proxy {
 
   _path = '';
 
-  static _store = {};
+  static _state = {};
 
   /**
    * 检测是否是 Proxy 实例
@@ -46,16 +46,16 @@ export default class Proxy {
    * 向 proxy 仓库中插入 store 对象，不传入命名空间因子表示为全局存放
    */
   static insertProxyStore(namespace, attr, value) {
-    if (namespace && !Proxy._store[namespace]) {
-      Proxy._store[namespace] = {};
+    if (namespace && !Proxy._state[namespace]) {
+      Proxy._state[namespace] = {};
     }
 
     const proxy = new Proxy(value);
     proxy.key = attr;
     proxy.path = `${namespace}.${attr}`;
 
-    if (namespace) Proxy._store[namespace][attr] = proxy;
-    else Proxy._store[attr] = proxy;
+    if (namespace) Proxy._state[namespace][attr] = proxy;
+    else Proxy._state[attr] = proxy;
 
     return proxy;
   }
@@ -64,8 +64,8 @@ export default class Proxy {
    * 通过 “反射” 的形式获取到对象上的原始 proxy 对象
    */
   static reflect(namespace = '', attr) {
-    if (!namespace) return get(Proxy._store, attr);
-    return get(Proxy._store, `${namespace}.${attr}`);
+    if (!namespace) return get(Proxy._state, attr);
+    return get(Proxy._state, `${namespace}.${attr}`);
   }
 
   /**

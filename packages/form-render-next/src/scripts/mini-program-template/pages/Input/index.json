@@ -1,7 +1,7 @@
 {
   "defaultTitle": "input",
   "usingComponents": {
-    "input": "../../../widgets/input",
+    "input": "/packages/form-render-next/src/platform/mini/alipay/widgets/input",
     "container": "antd-mini/es/Container/index"
   }
 }
