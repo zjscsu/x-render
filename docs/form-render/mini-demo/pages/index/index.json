@@ -1,5 +1,5 @@
 {
   "usingComponents": {
-    "form-render": "../../../../../packages/form-render/form-render-next/platform/mini/render/index"
+    "form-render": "../../../../../packages/form-render-next/src/platform/mini/render/index"
   }
 }

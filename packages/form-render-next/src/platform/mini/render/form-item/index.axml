@@ -1,0 +1,75 @@
+<template name="form-label">
+  <view 
+    class="{{displayType === 'row' ? 'c-form-item-label-container c-form-item-label-container-row' : 'c-form-item-label-container'}}"
+    a:if="{{schema.title}}"
+  >
+    <view class="{{displayType === 'row' ? 'c-form-item-label c-form-item-label-row' : 'c-form-item-label'}}">
+      <text 
+        class="{{schema.disabled ? 'af-common-disabled' : ''}}"
+      >
+        {{schema.title}}
+      </text>
+      <text 
+        a:if="{{schema.props.addonBefore}}"
+        class="c-form-item-label-addon-before"
+      >{{schema.props.addonBefore}}</text>
+      <text 
+        a:if="{{schema.required && !proxy.context.extendsInfo.allFieldsRequired}}"
+        class="c-form-item-label-required"
+      >*</text>
+      <text
+        a:if="{{schema.colon}}"
+      >：</text>
+    </view>
+  </view>
+</template>
+
+<mini-form-item 
+  form="{{form}}"  
+  name="{{data.path}}"
+>
+  <view 
+    class="c-form-item-container" 
+  >
+    <template 
+      is="form-label" 
+      data="{{schema: data.schema, displayType, proxy}}"
+      a:if="{{displayType === 'column'}}"
+    />
+
+    <!-- row 模式排列的情况下，希望 label 顶部对齐（默认为居中对齐），适用于多行的自定义组件（如地址组件） -->
+    <view class="{{displayTheme === 'row-column' ? 'c-form-item c-form-item-column' : 'c-form-item'}}">
+      <template 
+        is="form-label" 
+        data="{{schema: data.schema, displayType, proxy}}"
+        a:if="{{displayType === 'row'}}"
+      />
+
+      <!-- 嵌入的表单组件 -->
+      <view class="c-form-item-content">
+        <slot/>
+      </view>
+      <view a:if="{{arrow && !data.schema.disabled}}">
+        <icon 
+          color="#999"
+          size="x-small"
+          type="RightOutline" />
+      </view>
+    </view>
+
+    <view class="c-form-extra" a:if="{{!ignoreExtra && data.schema.extra.text}}">
+    </view>
+
+    <!-- 错误信息，默认只展示第一条 -->
+    <view 
+      class="{{proxy.context.errors[form][data.path][0] ? 'c-form-extra-errors c-form-extra-errors-show' : 'c-form-extra-errors c-form-extra-errors-hide'}}"
+    >{{proxy.context.errors[form][data.path][0]}}</view>
+
+    <!-- tips 提示信息 -->
+    <view 
+      class="c-form-item-tips-wrap"
+      a:if="{{data.schema.extra.tips.length}}"
+    >
+    </view>
+  </view>
+</mini-form-item>

@@ -1,3 +1,5 @@
-<view>
-  TODO: this is fallback of customize component
-</view>
+<!-- 
+  自定义表单组件的 mapping 的默认实现为空实现, 用户不指定的
+  话什么都不显示
+-->
+<block/>

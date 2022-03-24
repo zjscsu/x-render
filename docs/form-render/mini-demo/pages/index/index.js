@@ -1,10 +1,50 @@
+import useForm from '../../../../../packages/form-render-next/lib/core';
+ 
 Page({
+  data: {
+    schema: {},
+    form: {},
+    testObj: {},
+  },
   onLoad(query) {
     // 页面加载
     console.info(`Page onLoad with query: ${JSON.stringify(query)}`);
   },
   onReady() {
     // 页面加载完成
+    const schema = {
+      type: 'object',
+      properties: {
+        input1: {
+          title: '简单输入框',
+          type: 'string',
+          required: true,
+        },
+        select1: {
+          title: '单选',
+          type: 'string',
+          enum: ['a', 'b', 'c'],
+          enumNames: ['早', '中', '晚'],
+        },
+      },
+    };
+
+    const form = useForm();
+
+    form.onTest = () => {
+      console.log('test');
+    };
+
+    this.setData({
+      schema,
+      form,
+      testObj: {
+        test: 'this is test',
+        onTest: () => {
+          console.log('on test');
+        },
+      } 
+    });
   },
   onShow() {
     // 页面显示

@@ -1,0 +1,17 @@
+<!--
+  基础组件的 mapping, 渲染表单时候, 根据 widget 的名字
+  显示对应名字的基础表单组件.
+-->
+<view>
+  <!-- TODO -->
+
+  <block a:if="{{componentName === 'input'}}">
+    <input/>
+  </block>
+
+  <block a:if="{{componentName === 'select'}}">
+    <view>
+      this is base component "select"
+    </view>
+  </block>
+</view>

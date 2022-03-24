@@ -1,5 +1,8 @@
-
 <view>
-  this is a blank page
-  <form-render/>
+  this is the demo page
+  <form-render
+    schema="{{schema}}"
+    form="{{form}}"
+    testObj="{{testObj}}"
+  />
 </view>

@@ -1,18 +1,14 @@
+import form from 'antd-mini/es/mixins/form';
+
 Component({
+  mixins: [form()],
   methods: {
-    onInputChange(v) {
-      const {
-        onChange
-      } = this.props;
+    onChange(e) {
+      console.log('change');
 
-      onChange && onChange(v);
-    },
-    onInputClear(v) {
-      const {
-        onClear
-      } = this.props;
-
-      onClear && onClear(v);
+      if (this.props.onChange) {
+        this.props.onChange(e);
+      }
     }
   }
 })
