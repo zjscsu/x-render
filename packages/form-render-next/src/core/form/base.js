@@ -2,7 +2,7 @@ import Observer from '../observer';
 import { isObject } from '../utils';
 import Store from '../store';
 import Validator from '../validator';
-import BaseStore from '../store/base';
+import StoreWrapper from '../store/wrapper';
 import State from '../store/state';
 import Context from '../store/context';
 import Props from '../store/props';
@@ -22,9 +22,9 @@ export default class BaseForm extends Observer {
   _validator = Validator.create();
 
   _store = {
-    stateStore: BaseStore.create(State, BaseForm.namespace.State),
-    propsStore: BaseStore.create(Props, BaseForm.namespace.Props),
-    contextStore: BaseStore.create(Context, BaseForm.namespace.Context),
+    stateStore: StoreWrapper.create(State, BaseForm.namespace.State),
+    propsStore: StoreWrapper.create(Props, BaseForm.namespace.Props),
+    contextStore: StoreWrapper.create(Context, BaseForm.namespace.Context),
     formStore: null,
   }
 

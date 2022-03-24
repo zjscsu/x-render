@@ -1,9 +1,9 @@
 import Proxy from '../proxy';
 
-export default class BaseStore {
+export default class StoreWrapper {
   static create(Store, namespace, ...args) {
     const values = new Store(...args);
-    const store = new BaseStore(namespace);
+    const store = new StoreWrapper(namespace);
     store.values = values;
     return store;
   }
