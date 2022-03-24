@@ -1,23 +1,46 @@
-const watch = require('node-watch');
 const path = require('path');
 const shell = require('shelljs');
+const watch = require('node-watch');
 
-const watchPath = path.join(__dirname, '../platform/mini/widgets');
+const arguments = process.env;
 
-const watcher = watch(watchPath, {
-  recursive: true
-});
+const miniRootPath = './packages/form-render-next/src/platform/mini';
 
-watcher.on('change', (event, name) => {
-  console.log('===',path.join(watchPath, '../demo'))
-  shell.cd(path.join(watchPath, '../demo'));
+const alipayWidgetsPath = path.join(miniRootPath, './alipay/widgets');
+const alipayMiniProgramPath = path.join(miniRootPath, '../../scripts/mini-program-template');
+const wxWidgetsTemporaryPath = path.join('./wx', miniRootPath, './alipay/widgets');
+const wxWidgetsPath = path.join(miniRootPath, './wx/widgets');
+
+const needRemoveFileOrDirection = [
+  'wx',
+  'pages',
+  'app.js',
+  'app.acss',
+  'app.json',
+  'dslplus.config.js',
+  'mini.project.json'
+];
+
+if (!arguments.TRANSFORM_MODE) {
+  transform();
+}
+
+if (arguments.TRANSFORM_MODE === 'watch') {
+  const watcher = watch(alipayWidgetsPath, {
+    recursive: true
+  });
+
+  watcher.on('change', (event, name) => {
+    console.log(`you ${event} file ${name}`);
+    transform();
+  });
+}
+
+function transform() {
+  shell.cp('-r', `${alipayMiniProgramPath}/*`, '.');
   shell.exec('npx dslplus mtw');
-});
-
-watcher.on('error', (event, name) => {
-
-});
-
-watcher.on('ready', (event, name) => {
-
-});
+  shell.cp('-R', wxWidgetsTemporaryPath, wxWidgetsPath);
+  needRemoveFileOrDirection.forEach((item) => {
+    shell.rm('-rf', item);
+  });
+}

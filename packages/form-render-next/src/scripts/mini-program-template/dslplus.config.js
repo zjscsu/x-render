@@ -5,7 +5,7 @@ module.exports = {
   root: path.resolve('./'),
   output: {
     // 输出目录
-    dirname: path.resolve('./__mtw_next__'),
+    dirname: path.resolve('./wx'),
   },
   compiler: {
     // markup: {
