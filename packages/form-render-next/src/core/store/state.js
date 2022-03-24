@@ -78,11 +78,4 @@ export default class State {
    * 是否首次加载
    */
   firstMount = true;
-
-  /**
-   * 构造 State 实例
-   */
-  static create() {
-    return new State();
-  }
 }

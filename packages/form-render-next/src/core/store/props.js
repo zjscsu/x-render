@@ -33,11 +33,4 @@ export default class Props {
    * 数据分析接口，表单提交成功时触发，获得本次表单填写的总时长
    */
    logOnSubmit =() => {};
-
-  /**
-   * 构造 Props 实例
-   */
-  static create() {
-    return new getProps();
-  }
 }

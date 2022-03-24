@@ -1,101 +1,77 @@
 import Observer from '../observer';
-import Proxy from '../proxy';
 import { isObject } from '../utils';
-import State from './state';
-import Context from './context';
-import Props from './props';
-import Validator from '../validator';
 import Store from '../store';
+import Validator from '../validator';
+import StoreWrapper from '../store/wrapper';
+import State from '../store/state';
+import Context from '../store/context';
+import Props from '../store/props';
 
 export default class BaseForm extends Observer {
-  _validator = Validator.create();
-
-  _state = State.create();
-
-  _props = Props.create();
-
-  /**
-   * 外部通过 syncStuff 进行协议等同步
-   */
-  _context = Context.create();
-
-  _namespace = {
-    state: 'FormState',
-    props: 'FormProps',
-    context: 'FormContext',
-  };
-
-  /**
-   * 存放全局所有表单对象的引用
-   */
-  _store = null;
-
   /**
    * 用来全局标识表单的 ID，从 0 开始自增，在用户 useForm 时不显式传入 id 的时候也会作为默认值
    */
   static $id = 0;
 
-  constructor({
-    id,
-    formData,
-    onChange,
-    onValidate,
-    showValidate,
-    logOnMount,
-    logOnSubmit,
-  } = {}) {
-    super();
+  static namespace = {
+    State: 'FormState',
+    Props: 'FormProps',
+    Context: 'FormContext',
+  }
+
+  _validator = Validator.create();
+
+  _store = {
+    stateStore: StoreWrapper.create(State, BaseForm.namespace.State),
+    propsStore: StoreWrapper.create(Props, BaseForm.namespace.Props),
+    contextStore: StoreWrapper.create(Context, BaseForm.namespace.Context),
+    formStore: null,
+  }
+
+  _state = {};
+
+  _props = {};
+
+  /**
+   * 外部通过 syncStuff 进行协议等同步
+   */
+  _context = {};
+
+  _id;
+
+  constructor(props = {}) {
+    super(props);
 
     BaseForm.$id++;
-
-    this._bootstrap({
-      id: id || BaseForm.$id,
-      formData,
-      onChange,
-      onValidate,
-      showValidate,
-      logOnMount,
-      logOnSubmit,
-    });
+    this.id = props.id || BaseForm.$id;
+    this._bootstrap(props);
   }
 
   _bootstrap(props) {
-    this._initProps(props);
+    this._initProps();
     this._initContext();
     this._initState();
+    this.syncProps(props);
   }
 
-  _initProps(props) {
-    this._props = Proxy.proxyObject({
-      namespace: this.namespace.props,
-      target: props,
-    });
+  _initProps() {
+    const { propsStore } = this.store;
+    const proxyProps = propsStore.setupProxy();
+    this.props = proxyProps;
   }
 
   _initContext() {
-    this._context = Proxy.proxyObject({
-      namespace: this.namespace.context,
-      target: this._context,
-    });
-
-    Proxy.settleReflect({
-      namespace: this.namespace.context,
-      src: this,
-      target: this._context,
-    });
+    const { contextStore } = this.store;
+    const proxyContext = contextStore.setupProxy();
+    contextStore.setupReflect(this, proxyContext);
+    this.context = proxyContext;
   }
 
   _initState() {
-    this._state = Proxy.proxyObject({
-      namespace: this.namespace.state,
-      target: this._state,
-    });
-
-    Proxy.settleReflect({
-      namespace: this.namespace.state,
-      src: this,
-      target: this._state,
-    });
+    const { stateStore } = this.store;
+    const proxyState = stateStore.setupProxy();
+    stateStore.setupReflect(this, proxyState);
+    this.state = proxyState;
   }
 
   setState(states) {
@@ -137,8 +113,8 @@ export default class BaseForm extends Observer {
    * 回收存放在全局的表单实例
    */
   destroy = () => {
-    if(this.store instanceof Store) {
-      this.store.destroy(this.id);
+    if(this.formStore instanceof Store) {
+      this.formStore.destroy(this.id);
     }
   }
 
@@ -146,8 +122,8 @@ export default class BaseForm extends Observer {
    * 回收存放在全局的表单实例并删除 key
    */
   delete = () => {
-    if(this.store instanceof Store) {
-      this.store.delete(this.id);
+    if(this.formStore instanceof Store) {
+      this.formStore.delete(this.id);
     }
   }
 
@@ -167,12 +143,12 @@ export default class BaseForm extends Observer {
     this._props = newVal;
   }
 
-  get namespace() {
-    return this._namespace;
+  get context() {
+    return this._context;
   }
 
-  set namespace(newVal) {
-    this._namespace = newVal;
+  set context(newVal) {
+    this._context = newVal;
   }
 
   get validator() {
@@ -189,5 +165,45 @@ export default class BaseForm extends Observer {
 
   set store(newVal) {
     this._store = newVal;
+  }
+
+  get propsStore() {
+    return this.store.propsStore.namespace;
+  }
+
+  set propsStore(newVal) {
+    return this.store.propsStore.namespace = newVal;
+  }
+
+  get stateStore() {
+    return this.store.stateStore.namespace;
+  }
+
+  set stateStore(newVal) {
+    return this.store.stateStore.namespace = newVal;
+  }
+
+  get contextStore() {
+    return this.store.contextStore.namespace;
+  }
+
+  set contextStore(newVal) {
+    return this.store.contextStore.namespace = newVal;
+  }
+
+  get formStore() {
+    return this.store.formStore;
+  }
+
+  set formStore(newVal) {
+    return this.store.formStore = newVal;
+  }
+
+  get id() {
+    return this._id;
+  }
+
+  set id(newVal) {
+    this._id = newVal;
   }
 }
