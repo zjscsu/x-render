@@ -3,8 +3,10 @@
   "usingComponents": {
     "form": "antd-mini/es/Form/index",
     "form-item": "./form-item/index",
+    "mini-form-item": "antd-mini/es/Form/FormItem/index",
     "custom-component-fallback": "./customize-component-fallback/index",
-    "base-component": "./base-component/index"
+    "base-component": "./base-component/index",
+    "mini-input": "antd-mini/es/InputItem/index"
   },
   "componentGenerics": {
     "customize-form-render-component": {

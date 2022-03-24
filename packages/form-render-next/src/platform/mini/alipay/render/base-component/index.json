@@ -1,6 +1,6 @@
 {
   "component": true,
   "usingComponents": {
-    "input": "../../widgets/input/index"
+    "form-input": "../../widgets/input/index"
   }
 }

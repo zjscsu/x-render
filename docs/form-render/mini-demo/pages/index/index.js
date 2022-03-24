@@ -31,19 +31,13 @@ Page({
 
     const form = useForm();
 
-    form.onTest = () => {
-      console.log('test');
-    };
+    console.log('front form .........');
+    console.log(form);
+    console.log(form.id);
 
     this.setData({
       schema,
       form,
-      testObj: {
-        test: 'this is test',
-        onTest: () => {
-          console.log('on test');
-        },
-      } 
     });
   },
   onShow() {

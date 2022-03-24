@@ -1,5 +1,0 @@
-<input
-  onChange="onChange"
-  onInput="onChange"
-  onClear="onChange"
-/>

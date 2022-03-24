@@ -1,6 +1,0 @@
-{
-	"defaultTitle": "form render内置组件",
-  "usingComponents": {
-    "selector": "antd-mini/es/Selector/index"
-  }
-}

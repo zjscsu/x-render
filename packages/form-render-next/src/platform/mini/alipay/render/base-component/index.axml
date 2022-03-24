@@ -6,7 +6,7 @@
   <!-- TODO -->
 
   <block a:if="{{componentName === 'input'}}">
-    <input/>
+    <form-input/>
   </block>
 
   <block a:if="{{componentName === 'select'}}">

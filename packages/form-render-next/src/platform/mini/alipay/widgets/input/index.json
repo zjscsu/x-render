@@ -1,6 +1,5 @@
 {
-  "component": true,
   "usingComponents": {
-    "input": "antd-mini/es/InputItem/index"
+    "input-item": "antd-mini/es/InputItem/index"
   }
 }

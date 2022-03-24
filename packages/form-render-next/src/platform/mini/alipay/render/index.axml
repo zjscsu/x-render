@@ -6,27 +6,16 @@
   使用: TODO
 
   Demo: TODO
-
 -->
 
-<view
-  onTap="onClick"
->
-  this is renderer
-
-    ===
-
-  {{schema.}}
-
+<view>
   <form
     onValuesChange="onValuesChange" 
-    form="{{form.id}}" 
+    form="{{form}}"
     ref="getFormRef"
   >
     <form-item
       a:for="{{formFields}}"
-      data="{{item}}"
-      form="{{form}}"
     >
       <!-- 基础表单组件 -->
       <base-component

@@ -1,9 +1,0 @@
-<view>
-  <selector 
-    title="{{title}}"
-    value="{{value}}"
-    items="{{items}}"
-    multiple="{{multiple}}"
-    onChange="onSelectorChange"
-  />
-</view>
