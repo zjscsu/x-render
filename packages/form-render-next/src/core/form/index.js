@@ -8,7 +8,6 @@ import {
   parseAllExpression,
 } from '../utils';
 import { processData, transformDataWithBind2 } from '../utils/processData';
-import { validateAll } from '../validator';
 import {
   mapping as defaultMapping,
   getWidgetName,
@@ -30,8 +29,8 @@ export default class Form extends BaseForm {
       }
       this.setState({ formData });
     }, [
-      Proxy.reflect(this.namespace.props, 'formData'),
-      Proxy.reflect(this.namespace.context, 'schema'),
+      Proxy.reflect(this.propsStore, 'formData'),
+      Proxy.reflect(this.contextStore, 'schema'),
     ]);
 
     // 进行内外部错误合并
@@ -49,8 +48,8 @@ export default class Form extends BaseForm {
       }
       this.setState({ errorFields });
     }, [
-      Proxy.reflect(this.namespace.state, 'innerErrorFields'),
-      Proxy.reflect(this.namespace.state, 'outErrorFields'),
+      Proxy.reflect(this.stateStore, 'innerErrorFields'),
+      Proxy.reflect(this.stateStore, 'outErrorFields'),
     ]);
 
     // 扁平化处理 schema
@@ -85,10 +84,10 @@ export default class Form extends BaseForm {
         this.setState({ flatten, flattenArr, simpleFlattenArr });
       }
     }, [
-      Proxy.reflect(this.namespace.context, 'schema'),
-      Proxy.reflect(this.namespace.context, 'mapping'),
-      Proxy.reflect(this.namespace.context, 'widgets'),
-      Proxy.reflect(this.namespace.state, 'firstMount'),
+      Proxy.reflect(this.contextStore, 'schema'),
+      Proxy.reflect(this.contextStore, 'mapping'),
+      Proxy.reflect(this.contextStore, 'widgets'),
+      Proxy.reflect(this.stateStore, 'firstMount'),
     ]);
 
     // 统一的处理expression
@@ -119,9 +118,9 @@ export default class Form extends BaseForm {
 
       this.setState({ finalFlatten: newFlatten });
     }, [
-      Proxy.reflect(this.namespace.state, 'flatten'),
-      Proxy.reflect(this.namespace.state, 'formData'),
-      Proxy.reflect(this.namespace.state, 'firstMount'),
+      Proxy.reflect(this.stateStore, 'flatten'),
+      Proxy.reflect(this.stateStore, 'formData'),
+      Proxy.reflect(this.stateStore, 'firstMount'),
     ]);
   };
 
@@ -325,7 +324,7 @@ export default class Form extends BaseForm {
       isSubmitting: false,
     });
     //  https://formik.org/docs/guides/form-submission
-    return validateAll({
+    return this.validator.validateAll({
       formData: this.formData,
       flatten: this.finalFlatten,
       options: {

@@ -23,10 +23,15 @@ export default class Proxy {
   /**
    * 针对对象进行批量代理
    */
-  static proxyObject({ namespace, src = {}, target = {} }) {
+  static proxyObject({ namespace, src = {}, target = {}, attrList = [], isBlackList = true }) {
     if (!target || !isObject(target) || !isObject(src)) return;
 
     Object.keys(target).forEach(attr => {
+      if(attrList.length) {
+        if(isBlackList && attrList.indexOf(attr) > -1) return
+        if(!isBlackList && attrList.indexOf(attr) < 0) return;
+      }
+
       const proxy = Proxy.insertProxyStore(namespace, attr, target[attr]);
       Object.defineProperty(src, attr, {
         enumerable: true,
@@ -71,10 +76,15 @@ export default class Proxy {
   /**
    * 提供将 proxy 对象集映射到普通对象上的方法，方便进行 getter/setter 的定义
    */
-  static settleReflect({ namespace, src = {}, target = {} }) {
+  static settleReflect({ namespace, src = {}, target = {}, attrList = [], isBlackList = true }) {
     if (!target || !isObject(target) || !isObject(src)) return;
 
     Object.keys(target).forEach(attr => {
+      if(attrList.length) {
+        if(isBlackList && attrList.indexOf(attr) > -1) return
+        if(!isBlackList && attrList.indexOf(attr) < 0) return;
+      }
+
       Object.defineProperty(src, attr, {
         enumerable: true,
         get() {

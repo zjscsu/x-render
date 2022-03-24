@@ -38,11 +38,4 @@ export default class Context {
    * 是否正在提交中
    */
    readOnly = false;
-
-  /**
-   * 构造 Context 实例
-   */
-  static create() {
-    return new Context();
-  }
 }
