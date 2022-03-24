@@ -1,7 +1,0 @@
-{
-  "component": true,
-  "styleIsolation": "shared",
-  "usingComponents": {
-    "input": "../../../../../../../../npm_modules/antd-mini/es/InputItem/index"
-  }
-}

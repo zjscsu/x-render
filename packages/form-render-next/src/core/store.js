@@ -10,7 +10,7 @@ export default class Store {
   }
 
   setItem = (key, value) => {
-    if(this.get(key)) {
+    if(this.getItem(key)) {
       console.warn(`id ${key} already exists, the new value of id ${key} will replace the old one.`)
     }
 

@@ -8,7 +8,7 @@ export {
   formStore,
 }
 
-export default function useForm(options) {
+export default function useForm(options = {}) {
   const { useStore: defaultUseStore } = options;
   const form = new Form(options);
   const { id } = form;
@@ -20,8 +20,8 @@ export default function useForm(options) {
   }
   
   if(useStore) {
-    form.store = formStore;
     formStore.setItem(id, form);
+    form.formStore = formStore;
   }
 
   return form;
