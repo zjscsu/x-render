@@ -1,8 +1,0 @@
-{
-  "defaultTitle": "input",
-  "usingComponents": {
-    "input": "/components/input",
-    "select": "/components/input",
-    "radio": "/components/input"
-  }
-}

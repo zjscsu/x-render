@@ -1,8 +1,0 @@
-.demo-selector {
-  padding-top: 24rpx;
-}
-
-.demo-selector-result {
-  margin-top: 24rpx;
-  margin-left: 24rpx;
-}
