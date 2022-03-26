@@ -256,7 +256,7 @@ async function copyPatchDirs() {
 // 执行转换前的清理操作
 function beforeTransform() {
   shell.exec(`rm -rf ${alipayMiniProgramPath}`);
-  shell.exec(`rm -rf ${commonEsPath}`);
+  shell.exec(`rm -rf ${commonLibPath}`);
   shell.exec(`rm -rf ${commonEsPath}`);
 }
 
