@@ -12,7 +12,6 @@
 /dist
 /lib
 /docs-dist
-__wx__
 
 # misc
 .idea
@@ -51,3 +50,4 @@ node_modules
 old-doc
 test.json
 /docs/guide/.test
+.mini-program-template/

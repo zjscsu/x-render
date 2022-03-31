@@ -1,7 +1,0 @@
-{
-  "defaultTitle": "input",
-  "usingComponents": {
-    "input": "/components/input",
-    "container": "antd-mini/es/Container/index"
-  }
-}

@@ -24,8 +24,6 @@
   </view>
 
   <view>
-    aaaaaaaaaaaaaaaaa
-    {{formData.flattenArr}}
     <form
       a:if="{{form && form !== ''}}"
       onValuesChange="onValuesChange" 
@@ -66,5 +64,4 @@
 
   </view>
 </view>
-
 

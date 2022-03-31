@@ -23,6 +23,7 @@
   ],
   "scripts": {
     "build": "father-build",
+    "start": "NODE_ENV=development father-build --watch",
     "prepare": "npm run build",
     "postpublish": "git push --tags",
     "beta": "npm publish --tag beta",

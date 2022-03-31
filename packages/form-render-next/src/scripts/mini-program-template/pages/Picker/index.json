@@ -1,7 +1,0 @@
-{
-  "defaultTitle": "input",
-  "usingComponents": {
-    "picker": "/components/picker",
-    "container": "antd-mini/es/Container/index"
-  }
-}
