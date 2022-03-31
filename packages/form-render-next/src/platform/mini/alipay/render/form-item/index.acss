@@ -1,0 +1,93 @@
+
+.c-form-item-container {
+  color: #333;
+  box-sizing: border-box;
+}
+.c-form-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 46rpx;
+}
+.c-form-item-column {
+  align-items: flex-start;
+}
+.c-form-item-label {
+  padding-bottom: 10rpx;
+  font-size: 32rpx;
+}
+.c-form-item-label-row {
+  padding-bottom: 0rpx;
+  max-width: 300rpx;
+  min-width: 150rpx;
+}
+.c-form-item-label-required {
+  color: #ff2f23;
+  margin-left: 8rpx;
+}
+.c-form-item-label-addon-before {
+  color: #999;
+}
+.c-form-item-label-container {
+  width: 254rpx;
+  padding-right: 24rpx;
+  display: flex;
+  text-align: left;
+  align-items: center;
+  position: relative;
+}
+.c-form-item-label-container-row {
+  padding-bottom: 0rpx;
+}
+.c-form-item-content {
+  flex: 1;
+  color: #333;
+  text-align: left;
+  font-size: 32rpx;
+}
+.c-form-item-arrow-text {
+  color: #ccc;
+}
+.c-form-extra {
+  text-align: left;
+  color: #888;
+  font-size: 28rpx;
+  padding-top: 20rpx;
+}
+.c-form-extra-errors {
+  text-align: left;
+  font-size: 28rpx;
+  color: #ff2f23;
+  padding-top: 8rpx;
+}
+.c-form-extra-errors-show {
+  animation: height-animation-show 0.2s linear;
+}
+.c-form-extra-errors-hide {
+  height: 0;
+  overflow: hidden;
+  padding-top: 0;
+  animation: height-animation-hide 0.2s linear;
+}
+@keyframes height-animation-show {
+  0% {
+  height: 32rpx;
+  opacity: 0.5;
+}
+100% {
+  opacity: 1;
+  height: 40rpx;
+}
+
+}
+@keyframes height-animation-hide {
+  0% {
+  opacity: 1;
+  height: 40rpx;
+}
+100% {
+  opacity: 0;
+  height: 0rpx;
+}
+
+}

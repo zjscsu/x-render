@@ -26,7 +26,7 @@
 
 <mini-form-item 
   form="{{form}}"  
-  name="{{data.path}}"
+  name="{{data.schema.$id}}"
 >
   <view 
     class="c-form-item-container" 
@@ -65,11 +65,22 @@
       class="{{proxy.context.errors[form][data.path][0] ? 'c-form-extra-errors c-form-extra-errors-show' : 'c-form-extra-errors c-form-extra-errors-hide'}}"
     >{{proxy.context.errors[form][data.path][0]}}</view>
 
+    <view 
+      class="c-form-extra-errors c-form-extra-errors-show"
+    >this is a test error</view>
+
+
     <!-- tips 提示信息 -->
     <view 
       class="c-form-item-tips-wrap"
       a:if="{{data.schema.extra.tips.length}}"
     >
+    </view>
+
+    <view 
+      class="c-form-item-tips-wrap"
+    >
+      this is tips
     </view>
   </view>
 </mini-form-item>

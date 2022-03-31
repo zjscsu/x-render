@@ -1,8 +1,8 @@
 <view>
   this is the demo page
-  <form-render
-    schema="{{schema}}"
-    form="{{form}}"
-    testObj="{{testObj}}"
-  />
+
+    <form-render
+      schema="{{schema}}"
+      form="{{form}}"
+    />
 </view>

@@ -1,38 +1,42 @@
 import { formStore } from '../../../../../lib/core/useForm';
- 
+import Proxy from '../../../../../lib/core/proxy';
+import { sortedUniqBy, clone, set } from 'lodash-es';
+
+const setValueByPath = (formInstance, path, value) => {
+  // FIX_ME
+  const newFormData = clone(formInstance.formData);
+  set(newFormData, path, value);
+  formInstance.setValues(newFormData);
+};
+
 Component({
   props: {
     schema: {},
-    form: null,
+    form: undefined,
   },
 
   data: {
+    /**
+      formField 的结构:
+      interface FormField{
+        schema: {};
+        value: {};
+        error: {};
+      }
+
+      formFields 为 FormField 的数组形式
+    */
     formFields: [],
+
+    /**
+    * 将所有的 form 的相关的状态统一放在 formData 中
+    */
+    formData: {},
+
+    formString: '',
   },
 
-  didMount() {
-    console.log('mount------------------');
-    const { form } = this.props;
-
-    // 检查 form 实例是否存在
-    try {
-      const _ = form.submit;
-    } catch (error) {
-      console.error('form 为必填 props，<form-render /> 没有接收到 form 属性!');
-    }
-
-    console.log('form: use '); console.log(form);
-
-    console.log('schema from renderer:');
-    console.log(this.props.schema);
-
-    this.setData({
-      formFields: ['input', 'select', 'select', 'select', 'input'],
-    });
-
-    console.log('formStore ==================');
-    console.log(formStore);
-  },
+  didMount() {},
 
   didUnMount() {
     this.unBindForm();
@@ -40,47 +44,97 @@ Component({
 
   didUpdate(prevProps, prevData) {
     if (prevProps.schema !== this.props.schema) {
-      console.log('new schema');
-      console.log(this.props.form);
-      if (this.props.form.id) {
+      if (this.props.form) {
+        const formInstance = formStore.getItem(this.props.form);
+        formInstance.syncStuff({
+          schema: this.props.schema,
+        });
       }
-      console.log(this.props.schema);
-      console.log('props.form -------');
-      console.log(this.props.form);
+    }
+
+    if (prevProps.form !== this.props.form) {
+      // form 变动， 重新 bind form
+      const formInstance = formStore.getItem(this.props.form);
+      this.bindForm(formInstance);
     }
   },
 
   methods: {
-    onValuesChange(value) {
-      console.log('value change:');
-      console.log(value);
+    onValuesChange(changeValues) {
+      const formInstance = this.formInstance;
+
+      if (!formInstance) {
+        return;
+      }
+
+      console.log('formInstance:');
+      console.log(formInstance);
+
+      const changedKey = Object.keys(changeValues)[0];
+      formInstance.touchKey(changedKey);
+      setValueByPath(formInstance, changedKey, changeValues[changedKey]);
+
+      // TODO validate
+      // TODO set error fields
+
+      console.log('changed values:');
+      console.log(changeValues);
+
+      console.log(formInstance.validator);
+      console.log(formInstance.validator.getAllPaths());
     },
+
     onClick() {},
 
-    bindForm(form) {
+    bindForm(formInstance) {
       // 先释放对之前的 form 的监听
       this.unBindForm();
 
-      const unBindSchema = form.observe(() => {
-        // set schema
-      },[schema]);
+      this.formInstance = formInstance;
 
-      const unBindValue = form.observe(() => {
-        // set schema
-      },[value]);
+      console.log('formInstance');
+      console.log(formInstance);
+  
+      // 监听任何 form 属性的变化
+      formInstance._setTrigger(() => {
+        console.log('formInstance============');
+        console.log(formInstance);
 
-      // set unBind function;
+        const serializedForm = JSON.stringify(formInstance);
+        
+        // 这里 formInstance上的
+        this.setData({
+          formData: formInstance,
+        });
+
+        console.log(this.data);
+      });
+
+      const unBindSchema = formInstance.observe(() => {
+        const formFields = formInstance.simpleFlattenArr;
+
+        this.setData({
+          formFields,
+        });
+      }, [Proxy.reflect('schema', formInstance.store)]);
+
+      const unBindFormData = formInstance.observe(() => {
+        console.log('formData changed.....');
+      }, [Proxy.reflect('formData', formInstance.store)]);
+
+      // set unBind handler;
       this.handleUnBind = () => {
+        formInstance._setTrigger(() => {});
         unBindSchema();
-        unBindValue();
+        this.formInstance = null;
       };
     },
 
     unBindForm() {
       if (this.handleUnBind) {
         this.handleUnBind();
+        this.handleUnBind = null;
       }
-      // TODO 
     },
   },
 });

@@ -12,7 +12,7 @@ export default class Props {
   /**
    * 表单字段变化回调
    */
-   onChange = () => {};
+   onChange = undefined;
 
   /**
    * 校验信息配置

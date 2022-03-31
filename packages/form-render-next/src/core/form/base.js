@@ -43,7 +43,7 @@ export default class BaseForm extends Observer {
     super(props);
 
     BaseForm.$id++;
-    this.id = props.id || BaseForm.$id;
+    this.id = props.id || `${BaseForm.$id}`;
     this._bootstrap(props);
   }
 
@@ -93,8 +93,8 @@ export default class BaseForm extends Observer {
 
   syncProps(props = {}) {
     const {
+      onChange,
       formData = {},
-      onChange = () => {},
       onValidate = () => {},
       showValidate = () => {},
       logOnMount = () => {},

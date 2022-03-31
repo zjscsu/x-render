@@ -3,8 +3,7 @@ import useForm from '../../../../../packages/form-render-next/lib/core';
 Page({
   data: {
     schema: {},
-    form: {},
-    testObj: {},
+    form: undefined,
   },
   onLoad(query) {
     // 页面加载
@@ -12,6 +11,7 @@ Page({
   },
   onReady() {
     // 页面加载完成
+
     const schema = {
       type: 'object',
       properties: {
@@ -19,26 +19,54 @@ Page({
           title: '简单输入框',
           type: 'string',
           required: true,
+          disabled: true,
+          rules: [
+            {
+              "pattern": "^[0-9]+$",
+              "message": "只允许数字 "
+            }
+          ],
         },
         select1: {
           title: '单选',
           type: 'string',
           enum: ['a', 'b', 'c'],
           enumNames: ['早', '中', '晚'],
+          required: true,
         },
+        testObj: {
+          type: 'object',
+          properties: {
+            input3: {
+              title: '简单输入框',
+              type: 'string',
+              required: true,
+            },
+            select4: {
+              title: '单选',
+              type: 'string',
+              enum: ['a', 'b', 'c'],
+              enumNames: ['早', '中', '晚'],
+            },
+          },
+        }
       },
     };
 
-    const form = useForm();
-
-    console.log('front form .........');
-    console.log(form);
-    console.log(form.id);
+    const form = useForm({
+      useStore: true,
+    });
 
     this.setData({
       schema,
-      form,
+      form: form.id,
     });
+
+    this.setData({
+      text: 'tt'
+    });
+
+    
   },
   onShow() {
     // 页面显示
@@ -51,6 +79,8 @@ Page({
   },
   onTitleClick() {
     // 标题被点击
+    //
+    
   },
   onPullDownRefresh() {
     // 页面被下拉

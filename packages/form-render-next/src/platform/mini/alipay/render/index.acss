@@ -1,0 +1,60 @@
+.c-form-container {
+  box-sizing: border-box;
+}
+.c-form-container-title {
+  font-size: 28rpx;
+  color: #999;
+  padding: 32rpx 24rpx 8rpx;
+}
+.c-form-container .amd-form {
+  padding: 0 24rpx;
+  background: #fff;
+}
+.c-form-container-tips {
+  padding: 24rpx 0;
+  padding-top: 0;
+  font-size: 28rpx;
+  color: #999;
+}
+.c-form-container .amd-input-item-content {
+  font-size: 32rpx;
+}
+.c-form-container .amd-form-item-line {
+  padding: 26rpx 0;
+}
+.c-form-container .amd-form-item {
+  min-height: 96rpx;
+}
+.c-form-container-transparent .c-form-item-container {
+  padding-left: 0;
+}
+.c-form-container-transparent .amd-form-item {
+  background-color: transparent;
+}
+.c-form-container-transparent .amd-form-item-line {
+  padding: 0;
+}
+.c-form-container-tiny {
+  margin-top: 32rpx;
+}
+.c-form-container-tiny .amd-form-item-line {
+  padding: 0;
+}
+.c-form-container-tiny .amd-form-item-line::after {
+  display: none;
+}
+.c-form-container-tiny .amd-form-item {
+  background-color: transparent;
+  margin-bottom: 8rpx;
+}
+.c-form-container-tiny .c-form-item {
+  align-items: start;
+}
+.c-form-container-tiny .c-form-item-label,
+.c-form-container-tiny .c-form-item-content {
+  font-size: 28rpx;
+  color: #999;
+}
+.c-form-container-tiny .c-form-item-label-container {
+  width: 254rpx;
+}

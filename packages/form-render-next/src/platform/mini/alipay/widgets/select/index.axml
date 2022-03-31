@@ -1,0 +1,9 @@
+<view>
+  <input-item
+    placeholder="{{placeholder}}"
+    maxLength="{{maxLength}}"
+    disabled="{{disabled}}"
+    onChange="onInputChange"
+    onClear="onInputClear"
+  />
+</view>
