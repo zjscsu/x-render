@@ -149,6 +149,18 @@ export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
   return result;
 }
 
+export function flattenFormDataByPathList(_formData, pathList) {
+  const formData = clone(_formData);
+
+  let flattedObject = {};
+
+  pathList.forEach(path => {
+    flattedObject[path] = get(formData, path);
+  });
+
+  return flattedObject;
+}
+
 export function getSchemaFromFlatten(flatten, path = '#') {
   let schema = {};
   const item = clone(flatten[path]);

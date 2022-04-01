@@ -24,11 +24,14 @@
   </view>
 
   <view>
+    {{initialValues.input1}}
     <form
       a:if="{{form && form !== ''}}"
-      onValuesChange="onValuesChange" 
+      onValuesChange="onValuesChange"
       form="{{form}}"
       ref="getFormRef"
+      onFinish="handleSubmit"
+      initialValues="{{initialValues}}"
     >
       <form-item
         a:for="{{formFields}}"
@@ -59,6 +62,11 @@
           componentName="{{item.componentName}}"
           form={{form}}
         />
+        
+        <block slot="form-tip">
+          <customize-form-render-tip-view value="[some value]" />
+        </block>
+
       </form-item>
     </form>
 

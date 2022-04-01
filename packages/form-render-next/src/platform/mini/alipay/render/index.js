@@ -31,12 +31,26 @@ Component({
     /**
     * 将所有的 form 的相关的状态统一放在 formData 中
     */
-    formData: {},
+    formData: {
+      errors: [],
+      schema: {},
+      values: [],
+    },
 
     formString: '',
   },
 
-  didMount() {},
+  didMount() {
+
+    // TODO test
+    //
+    this.setData({
+      initialValues: {
+        input1: 'test'
+      }
+    });
+
+  },
 
   didUnMount() {
     this.unBindForm();
@@ -60,6 +74,9 @@ Component({
   },
 
   methods: {
+    getFormRef(ref) {
+      this.formRef = ref;
+    },
     onValuesChange(changeValues) {
       const formInstance = this.formInstance;
 
@@ -79,9 +96,6 @@ Component({
 
       console.log('changed values:');
       console.log(changeValues);
-
-      console.log(formInstance.validator);
-      console.log(formInstance.validator.getAllPaths());
     },
 
     onClick() {},
@@ -92,22 +106,17 @@ Component({
 
       this.formInstance = formInstance;
 
-      console.log('formInstance');
-      console.log(formInstance);
-  
       // 监听任何 form 属性的变化
       formInstance._setTrigger(() => {
+
         console.log('formInstance============');
         console.log(formInstance);
-
-        const serializedForm = JSON.stringify(formInstance);
         
-        // 这里 formInstance上的
-        this.setData({
-          formData: formInstance,
-        });
-
-        console.log(this.data);
+        // TODO 性能优化， 防抖处理
+        if (this.formRef) {
+          const flattedFormData = formInstance.flattenFormData();
+          this.formRef.setFieldsValue(this.props.form, flattedFormData);
+        }
       });
 
       const unBindSchema = formInstance.observe(() => {
@@ -119,7 +128,7 @@ Component({
       }, [Proxy.reflect('schema', formInstance.store)]);
 
       const unBindFormData = formInstance.observe(() => {
-        console.log('formData changed.....');
+
       }, [Proxy.reflect('formData', formInstance.store)]);
 
       // set unBind handler;

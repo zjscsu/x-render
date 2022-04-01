@@ -4,7 +4,6 @@
 -->
 <view>
   <!-- TODO -->
-
   <block a:if="{{componentName === 'input'}}">
     <form-input
       form="{{form}}"

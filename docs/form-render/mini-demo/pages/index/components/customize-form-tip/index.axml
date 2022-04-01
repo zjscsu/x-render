@@ -1,0 +1,6 @@
+<view style="border: solid 1px green;">
+  this is my customize tip view
+  <view>
+    this is tip value: {{value}}
+  </view>
+<view>

@@ -71,6 +71,7 @@
 
 
     <!-- tips 提示信息 -->
+    
     <view 
       class="c-form-item-tips-wrap"
       a:if="{{data.schema.extra.tips.length}}"
@@ -80,7 +81,7 @@
     <view 
       class="c-form-item-tips-wrap"
     >
-      this is tips
+      <slot name="form-tip"/>
     </view>
   </view>
 </mini-form-item>

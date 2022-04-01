@@ -4,5 +4,7 @@
     <form-render
       schema="{{schema}}"
       form="{{form}}"
+      generic:customize-form-render-component="customize-form-component"
+      generic:customize-form-render-tip-view="customize-form-tip-view"
     />
 </view>

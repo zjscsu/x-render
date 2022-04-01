@@ -1,5 +1,7 @@
 {
   "usingComponents": {
-    "form-render": "../../../../../packages/form-render-next/src/platform/mini/alipay/render/index"
+    "form-render": "../../../../../packages/form-render-next/src/platform/mini/alipay/render/index",
+    "customize-form-component": "./components/customize-form-component/index",
+    "customize-form-tip-view": "./components/customize-form-tip/index"
   }
 }

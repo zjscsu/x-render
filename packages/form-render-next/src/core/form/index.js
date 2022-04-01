@@ -6,6 +6,7 @@ import {
   flattenSchema,
   schemaContainsExpression,
   parseAllExpression,
+  flattenFormDataByPathList,
 } from '../utils';
 import { processData, transformDataWithBind2 } from '../utils/processData';
 import {
@@ -397,4 +398,18 @@ export default class Form extends BaseForm {
       outsideValidating: false,
     });
   };
+
+  flattenFormData() {
+    if (!this.formData) {
+      return {};
+    }
+
+    console.log('debug');
+    console.log(this.formData);
+
+    const pathList = this.simpleFlattenArr
+      .map(field => field.schema.$id);
+
+    return flattenFormDataByPathList(this.formData, pathList);
+  }
 }

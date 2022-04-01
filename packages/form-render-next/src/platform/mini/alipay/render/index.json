@@ -11,6 +11,9 @@
   "componentGenerics": {
     "customize-form-render-component": {
       "default": "./customize-component-fallback/index"
+    },
+    "customize-form-render-tip-view": {
+      "default": "./customize-component-fallback/index"
     }
   }
 }
