@@ -1,10 +1,16 @@
 <view>
-  this is the demo page
-
     <form-render
       schema="{{schema}}"
       form="{{form}}"
-      generic:customize-form-render-component="customize-form-component"
-      generic:customize-form-render-tip-view="customize-form-tip-view"
+      widgets="{{widgets}}"
+      generic:customize-renderer="customize-renderer"
     />
+  <view>
+    <button 
+      type="primary"
+      onTap="onSubmit"
+    >
+      提交
+    </button>
+  </view>
 </view>

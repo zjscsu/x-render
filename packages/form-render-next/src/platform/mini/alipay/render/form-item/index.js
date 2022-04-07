@@ -5,6 +5,9 @@ const DisplayTypeEnum = ['column', 'row'];
 const DefaultDisplayType = 'row';
 
 Component({
+  props: {
+    errorMessage: '',
+  },
   data: {
     // string('column' / 'row')
     displayType: DefaultDisplayType,

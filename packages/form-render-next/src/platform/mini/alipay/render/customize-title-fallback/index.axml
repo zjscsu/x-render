@@ -1,0 +1,19 @@
+<view 
+  class="{{'c-form-item-label-container c-form-item-label-container-row'}}"
+  a:if="{{schema.title}}"
+>
+  <view class="{{displayType === 'row' ? 'c-form-item-label c-form-item-label-row' : 'c-form-item-label'}}">
+    <text 
+      class="{{schema.disabled ? 'af-common-disabled' : ''}}"
+    >
+      {{schema.title}}
+    </text>
+    <text 
+      a:if="{{schema.required && !proxy.context.extendsInfo.allFieldsRequired}}"
+      class="c-form-item-label-required"
+    >*</text>
+    <text
+      a:if="{{schema.colon}}"
+    >：</text>
+  </view>
+</view>

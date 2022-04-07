@@ -3,16 +3,29 @@
   显示对应名字的基础表单组件.
 -->
 <view>
-  <!-- TODO -->
-  <block a:if="{{componentName === 'input'}}">
+  <block a:if="{{data.field.schema.widget === 'input'}}">
     <form-input
       form="{{form}}"
     />
   </block>
 
-  <block a:if="{{componentName === 'select'}}">
-    <view>
-      this is base component "select"
-    </view>
+  <block a:if="{{data.field.schema.widget === 'select'}}">
+    <form-select
+      form="{{form}}"
+      data="{{data}}"
+    />
+  </block>
+
+  <block a:if="{{data.field.schema.widget === 'checkbox'}}">
+    <checkbox
+      form="{{form}}"
+    />
+  </block>
+
+
+  <block a:if="{{data.field.schema.widget === 'switch'}}">
+    <switch
+      form="{{form}}"
+    />
   </block>
 </view>

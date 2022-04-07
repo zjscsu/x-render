@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "checkbox": "antd-mini/es/Checkbox/index"
+  }
+}

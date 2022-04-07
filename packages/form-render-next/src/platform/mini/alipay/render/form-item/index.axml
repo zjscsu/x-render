@@ -10,10 +10,6 @@
         {{schema.title}}
       </text>
       <text 
-        a:if="{{schema.props.addonBefore}}"
-        class="c-form-item-label-addon-before"
-      >{{schema.props.addonBefore}}</text>
-      <text 
         a:if="{{schema.required && !proxy.context.extendsInfo.allFieldsRequired}}"
         class="c-form-item-label-required"
       >*</text>
@@ -26,24 +22,13 @@
 
 <mini-form-item 
   form="{{form}}"  
-  name="{{data.schema.$id}}"
+  name="{{data.field.schema.$id}}"
 >
   <view 
     class="c-form-item-container" 
   >
-    <template 
-      is="form-label" 
-      data="{{schema: data.schema, displayType, proxy}}"
-      a:if="{{displayType === 'column'}}"
-    />
-
-    <!-- row 模式排列的情况下，希望 label 顶部对齐（默认为居中对齐），适用于多行的自定义组件（如地址组件） -->
     <view class="{{displayTheme === 'row-column' ? 'c-form-item c-form-item-column' : 'c-form-item'}}">
-      <template 
-        is="form-label" 
-        data="{{schema: data.schema, displayType, proxy}}"
-        a:if="{{displayType === 'row'}}"
-      />
+      <slot name="form-title"/>
 
       <!-- 嵌入的表单组件 -->
       <view class="c-form-item-content">
@@ -57,26 +42,19 @@
       </view>
     </view>
 
-    <view class="c-form-extra" a:if="{{!ignoreExtra && data.schema.extra.text}}">
+    <view class="c-form-extra" a:if="{{!ignoreExtra && data.field.schema.extra.text}}">
+      {{data.field.schema.extra.text}}
     </view>
 
+    <!-- TODO 自定义错误信息组件 -->
     <!-- 错误信息，默认只展示第一条 -->
     <view 
-      class="{{proxy.context.errors[form][data.path][0] ? 'c-form-extra-errors c-form-extra-errors-show' : 'c-form-extra-errors c-form-extra-errors-hide'}}"
-    >{{proxy.context.errors[form][data.path][0]}}</view>
-
-    <view 
-      class="c-form-extra-errors c-form-extra-errors-show"
-    >this is a test error</view>
-
+      class="{{data.error.error[0] ? 'c-form-extra-errors c-form-extra-errors-show' : 'c-form-extra-errors c-form-extra-errors-hide'}}"
+    >
+      {{data.error.error[0]}}
+    </view>
 
     <!-- tips 提示信息 -->
-    
-    <view 
-      class="c-form-item-tips-wrap"
-      a:if="{{data.schema.extra.tips.length}}"
-    >
-    </view>
 
     <view 
       class="c-form-item-tips-wrap"

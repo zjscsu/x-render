@@ -1,5 +1,5 @@
 {
   "usingComponents": {
-    "input-item": "antd-mini/es/InputItem/select"
+    "select-item": "antd-mini/es/Selector/index"
   }
 }

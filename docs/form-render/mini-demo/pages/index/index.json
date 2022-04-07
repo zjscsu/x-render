@@ -1,7 +1,9 @@
 {
   "usingComponents": {
     "form-render": "../../../../../packages/form-render-next/src/platform/mini/alipay/render/index",
-    "customize-form-component": "./components/customize-form-component/index",
-    "customize-form-tip-view": "./components/customize-form-tip/index"
+    "customize-renderer": "./components/customize-renderer/index",
+    "customize-tip": "./components/customize-tip/index",
+    "customize-title": "./components/customize-title/index",
+    "button": "antd-mini/es/Button/index"
   }
 }

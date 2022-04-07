@@ -93,9 +93,9 @@ export default class Form extends BaseForm {
 
     // 统一的处理expression
     this.observe(() => {
-      if (this.firstMount) {
-        return;
-      }
+      // if (this.firstMount) {
+      //   return;
+      // }
 
       let newFlatten = clone(this.flatten);
       Object.entries(this.flatten).forEach(([path, info]) => {
@@ -324,6 +324,7 @@ export default class Form extends BaseForm {
       allTouched: true,
       isSubmitting: false,
     });
+
     //  https://formik.org/docs/guides/form-submission
     return this.validator.validateAll({
       formData: this.formData,
@@ -403,9 +404,6 @@ export default class Form extends BaseForm {
     if (!this.formData) {
       return {};
     }
-
-    console.log('debug');
-    console.log(this.formData);
 
     const pathList = this.simpleFlattenArr
       .map(field => field.schema.$id);

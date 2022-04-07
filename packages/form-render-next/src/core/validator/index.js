@@ -26,9 +26,9 @@ export default class Validator {
     Object.keys(schema).forEach(key => {
       const item = schema[key];
       if (isObject(item)) {
-        result[key] = parseSchemaExpression(item, formData, path);
+        result[key] = this.parseSchemaExpression(item, formData, path);
       } else if (isExpression(item)) {
-        result[key] = parseSingleExpression(item, formData, path);
+        result[key] = this.parseSingleExpression(item, formData, path);
       } else {
         result[key] = item;
       }
@@ -69,7 +69,7 @@ export default class Validator {
   };
   
   validateField = ({ path, formData, flatten, options }) => {
-    const paths = getRelatedPaths(path, flatten);
+    const paths = this.getRelatedPaths(path, flatten);
     // console.log('all relevant paths:', paths);
     const promiseArray = paths.map(path => {
       const { id, dataIndex } = destructDataPath(path);
@@ -77,8 +77,8 @@ export default class Validator {
         const item = flatten[id] || flatten[`${id}[]`];
         const singleData = get(formData, path);
         let schema = item.schema || {};
-        const finalSchema = parseSchemaExpression(schema, formData, path);
-        return validateSingle(singleData, finalSchema, path, options); // is a promise
+        const finalSchema = this.parseSchemaExpression(schema, formData, path);
+        return this.validateSingle(singleData, finalSchema, path, options); // is a promise
       } else {
         return Promise.resolve();
       }
@@ -137,7 +137,7 @@ export default class Validator {
     options, // {locale = 'cn', validateMessages = {}}
   }) => {
     const paths = dataToKeys(formData);
-    const allPaths = getAllPaths(paths, flatten);
+    const allPaths = this.getAllPaths(paths, flatten);
     // console.log(formData, dataToKeys(formData), 'dataToKeysdataToKeys');
     // console.log('allPaths', allPaths);
     const promiseArray = allPaths.map(path => {
@@ -146,8 +146,8 @@ export default class Validator {
         const item = flatten[id] || flatten[`${id}[]`];
         const singleData = get(formData, path);
         let schema = item.schema || {};
-        const finalSchema = parseSchemaExpression(schema, formData, path);
-        return validateSingle(singleData, finalSchema, path, options); // is a promise
+        const finalSchema = this.parseSchemaExpression(schema, formData, path);
+        return this.validateSingle(singleData, finalSchema, path, options); // is a promise
       } else {
         return Promise.resolve();
       }

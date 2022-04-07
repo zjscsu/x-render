@@ -6,14 +6,19 @@
     "input-item": "antd-mini/es/InputItem/index",
     "form-item": "./form-item/index",
     "custom-component-fallback": "./customize-component-fallback/index",
+    "custom-tip-fallback": "./customize-tip-fallback/index",
+    "custom-title-fallback": "./customize-title-fallback/index",
     "base-component": "./base-component/index"
   },
   "componentGenerics": {
-    "customize-form-render-component": {
+    "customize-renderer": {
       "default": "./customize-component-fallback/index"
     },
-    "customize-form-render-tip-view": {
-      "default": "./customize-component-fallback/index"
+    "customize-tip": {
+      "default": "./customize-tip-fallback/index"
+    },
+    "customize-title": {
+      "default": "./customize-title-fallback/index"
     }
   }
 }

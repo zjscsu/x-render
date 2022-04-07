@@ -1,6 +1,5 @@
 <view>
-  <select-item
+  <checkbox
     mode="form"
-    items={{items}}
   />
 </view>

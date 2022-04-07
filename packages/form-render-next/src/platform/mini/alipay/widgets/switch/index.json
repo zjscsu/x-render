@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "switch": "antd-mini/es/Switch/index"
+  }
+}

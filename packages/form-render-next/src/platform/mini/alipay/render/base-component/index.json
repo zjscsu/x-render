@@ -1,6 +1,9 @@
 {
   "component": true,
   "usingComponents": {
-    "form-input": "../../widgets/input/index"
+    "form-input": "../../widgets/input/index",
+    "form-select": "../../widgets/select/index",
+    "checkbox": "../../widgets/checkbox/index",
+    "switch": "../../widgets/switch/index"
   }
 }

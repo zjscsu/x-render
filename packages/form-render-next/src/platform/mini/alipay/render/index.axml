@@ -9,22 +9,13 @@
 -->
 
 <view 
-  class="{{formContainer.getClassByTheme(props)}}" 
-  style="{{props.theme === 'tiny' ? `background: ${props.background} no-repeat; padding: ${props.background ? '28rpx' : '0 28rpx'} `: ''}}"
+  class="c-form-container" 
 >
   <view class="{{basic.title ? 'c-form-container-title': 'c-form-container-no-title'}}">
     {{basic.title}}
   </view>
 
-  <view 
-    class="c-form-container-tips"
-    a:if="{{basic.tips}}"
-  >
-    <html content="{{basic.tips}}"/>
-  </view>
-
   <view>
-    {{initialValues.input1}}
     <form
       a:if="{{form && form !== ''}}"
       onValuesChange="onValuesChange"
@@ -34,37 +25,32 @@
       initialValues="{{initialValues}}"
     >
       <form-item
-        a:for="{{formFields}}"
+        a:for="{{formDataList}}"
         data="{{item}}"
         form="{{form}}"
       >
         <!-- 基础表单组件 -->
         <base-component
-          componentName="{{item.schema.widget}}"
+          data="{{item}}"
           form={{form}}
         />
 
         <!--
-          下面表示第三方自定义组件, 表示渲染一个表单元素
-
-          一个抽象的表单元素表单元素的 props 至少要有以下几个属性:
-          1. "componentName": 需要渲染的表单项组件的名字
-          2. "value": 表单项的值
-          3. "onValueChange": 表单项组件的值变化的钩子函数
-
-          渲染表单的过程中，FormRender 将会将表单项对应的 三个属性传入，
-          这个组件需要实现：
-          1. 根据 componentName , 显示对应类型的组件，
-          2. 根据 value , 修改组件的值
-          3. 在组件的数值改变的时候， 触发 onValueChange 钩子, 并把新的数值传入。
+          下面表示第三方自定义组件, 表示渲染一个表单项
+          这个组件的功能是， 根据表单项的具体数据 data , 渲染一个自定义的表单项
         -->
-        <customize-form-render-component
-          componentName="{{item.componentName}}"
+        <customize-renderer
+          data="{{item}}"
           form={{form}}
         />
+
+
+        <block slot="form-title">
+          <customize-title schema="{{item.field.schema}}" />
+        </block>
         
         <block slot="form-tip">
-          <customize-form-render-tip-view value="[some value]" />
+          <customize-tip data="item" />
         </block>
 
       </form-item>

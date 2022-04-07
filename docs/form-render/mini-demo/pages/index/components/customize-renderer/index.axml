@@ -1,0 +1,17 @@
+<view>
+  <block a:if="{{data.field.schema.widget === 'my-input'}}">
+    <view style="border: 1rpx solid green; margin: 16rpx; height: 96rpx; line-height: 96rpx;">
+      <antd-input
+        mode="form"
+      />
+    </view>
+  </block>
+
+  <block a:if="{{data.field.schema.widget === 'my-select'}}">
+    <view>
+        this is my-select
+    </view>
+  </block>
+
+  <!-- more  -->
+</view>

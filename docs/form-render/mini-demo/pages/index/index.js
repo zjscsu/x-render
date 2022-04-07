@@ -1,5 +1,5 @@
 import useForm from '../../../../../packages/form-render-next/lib/core';
- 
+
 Page({
   data: {
     schema: {},
@@ -9,24 +9,32 @@ Page({
     // 页面加载
     console.info(`Page onLoad with query: ${JSON.stringify(query)}`);
   },
+  onInit() {},
   onReady() {
     // 页面加载完成
 
-    const schema = {
+    const mockingSchema = {
       type: 'object',
       properties: {
         input1: {
           title: '简单输入框',
           type: 'string',
-          required: true,
-          disabled: true,
           rules: [
             {
-              "pattern": "^[0-9]+$",
-              "message": "只允许数字 "
-            }
+              pattern: '^[0-9]+$',
+              message: '只允许数字 ',
+            },
           ],
         },
+        switch_d7W0Ij: {
+          title: '开关',
+          type: 'boolean',
+          widget: 'switch',
+          extra: {
+            text: '这是一个开关， (额外信息)',
+          },
+        },
+
         select1: {
           title: '单选',
           type: 'string',
@@ -38,18 +46,29 @@ Page({
           type: 'object',
           properties: {
             input3: {
-              title: '简单输入框',
+              title: '子层级输入框',
               type: 'string',
-              required: true,
+              disabled: true,
             },
             select4: {
-              title: '单选',
+              title: '子层级单选',
               type: 'string',
               enum: ['a', 'b', 'c'],
               enumNames: ['早', '中', '晚'],
             },
           },
-        }
+        },
+        'my-input1': {
+          title: '自定义输入组件',
+          widget: 'my-input',
+          type: 'string',
+          rules: [
+            {
+              pattern: '^[0-9]+$',
+              message: '只允许数字 ',
+            },
+          ],
+        },
       },
     };
 
@@ -57,16 +76,22 @@ Page({
       useStore: true,
     });
 
+    this.formInstance = form;
+
     this.setData({
-      schema,
+      schema: mockingSchema,
       form: form.id,
+      widgets: {
+        checkbox: 'checkbox',
+        switch: 'switch',
+        'my-select': 'my-select',
+        'my-input': 'my-input',
+      },
     });
 
     this.setData({
-      text: 'tt'
+      text: 'tt',
     });
-
-    
   },
   onShow() {
     // 页面显示
@@ -80,7 +105,6 @@ Page({
   onTitleClick() {
     // 标题被点击
     //
-    
   },
   onPullDownRefresh() {
     // 页面被下拉
@@ -96,4 +120,16 @@ Page({
       path: 'pages/index/index',
     };
   },
+  onSubmit() {
+    if (this.formInstance) {
+      console.log(this.formInstance);
+      this.formInstance
+        .submit()
+        .then( result => {
+          console.log('result ==============');
+          console.log(result);
+        });
+      ;
+    }
+  }
 });

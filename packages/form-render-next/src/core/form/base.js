@@ -6,6 +6,7 @@ import StoreWrapper from '../store/wrapper';
 import State from '../store/state';
 import Context from '../store/context';
 import Props from '../store/props';
+import {isFunction} from 'lodash-es';
 
 export default class BaseForm extends Observer {
   /**
@@ -86,9 +87,25 @@ export default class BaseForm extends Observer {
     }
 
     if (!isObject(newState)) return;
+
+    let stateChanged = false;
+
     Object.keys(newState).forEach(attr => {
-      this[attr] = newState[attr];
+      const newProperty = newState[attr];
+      const oldProperty = this[attr];
+
+      this[attr] = newProperty;
+
+      if (oldProperty !== newProperty) {
+        stateChanged = true;
+      }
     });
+      
+    if (stateChanged) {
+      if (isFunction(this._onTrigger)) {
+        this._onTrigger();
+      }
+    }
   }
 
   syncProps(props = {}) {
