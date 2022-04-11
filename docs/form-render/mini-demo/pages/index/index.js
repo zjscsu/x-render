@@ -3,15 +3,10 @@ import useForm from '../../../../../packages/form-render-next/lib/core';
 Page({
   data: {
     schema: {},
-    form: undefined,
   },
-  onLoad(query) {
-    // 页面加载
-    console.info(`Page onLoad with query: ${JSON.stringify(query)}`);
-  },
+  onLoad(query) {},
   onInit() {},
   onReady() {
-    // 页面加载完成
 
     const mockingSchema = {
       type: 'object',
@@ -19,6 +14,7 @@ Page({
         input1: {
           title: '简单输入框',
           type: 'string',
+          require: true,
           rules: [
             {
               pattern: '^[0-9]+$',
@@ -26,7 +22,7 @@ Page({
             },
           ],
         },
-        switch_d7W0Ij: {
+        switch1: {
           title: '开关',
           type: 'boolean',
           widget: 'switch',
@@ -34,9 +30,8 @@ Page({
             text: '这是一个开关， (额外信息)',
           },
         },
-
         select1: {
-          title: '单选',
+          title: '选择',
           type: 'string',
           enum: ['a', 'b', 'c'],
           enumNames: ['早', '中', '晚'],
@@ -51,7 +46,7 @@ Page({
               disabled: true,
             },
             select4: {
-              title: '子层级单选',
+              title: '子层级选择',
               type: 'string',
               enum: ['a', 'b', 'c'],
               enumNames: ['早', '中', '晚'],
@@ -115,8 +110,8 @@ Page({
   onShareAppMessage() {
     // 返回自定义分享信息
     return {
-      title: 'My App',
-      desc: 'My App description',
+      title: 'mini demo',
+      desc: 'ini demo',
       path: 'pages/index/index',
     };
   },
@@ -126,7 +121,7 @@ Page({
       this.formInstance
         .submit()
         .then( result => {
-          console.log('result ==============');
+          console.log('result :');
           console.log(result);
         });
       ;

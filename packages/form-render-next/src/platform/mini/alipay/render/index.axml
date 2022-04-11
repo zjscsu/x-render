@@ -44,7 +44,6 @@
           form={{form}}
         />
 
-
         <block slot="form-title">
           <customize-title schema="{{item.field.schema}}" />
         </block>
