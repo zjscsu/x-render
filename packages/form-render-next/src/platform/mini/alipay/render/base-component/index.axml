@@ -22,7 +22,6 @@
     />
   </block>
 
-
   <block a:if="{{data.field.schema.widget === 'switch'}}">
     <switch
       form="{{form}}"

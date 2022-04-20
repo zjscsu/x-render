@@ -1,9 +1,7 @@
 Component({
   props: {},
   data: {},
-  didMount() {
-    console.log(this.props);
-  },
+  didMount() {},
   didUpdate(p1, p2) {
   },
 });

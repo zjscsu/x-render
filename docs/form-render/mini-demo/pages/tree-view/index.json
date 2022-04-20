@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "meta": "../../../../../packages/form-render-next/src/platform/mini/alipay/render/meta-component/index"
+  }
+}

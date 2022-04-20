@@ -137,7 +137,8 @@ Component({
     updateView(formInstance) {
 
       if (this.formRef) {
-        const flattedFormData = formInstance.flattenFormData();
+        // TODO: 
+        // const flattedFormData = formInstance.flattenFormData();
         // this.formRef.setFieldsValue(this.props.form, flattedFormData);
       }
 

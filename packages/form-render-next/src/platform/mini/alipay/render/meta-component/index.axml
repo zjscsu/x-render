@@ -1,0 +1,22 @@
+<!--
+  一个能够根据树形数据结构渲染树形小程序组件结构的组件
+
+  从props 中传入一个树形结构的数据， 便可以渲染出树形结构的 view
+
+  通过 meta.data 的具体内容， 将会渲染不同的节点,具体渲染什么节点，
+  将由 组件的使用者通过设置不同的 customize-meta-component 实现。
+-->
+<view>
+  <view a:if={{meta.data}}>
+    {{meta.data}}
+    <customize-meta-component 
+      meta-data={{meta.data}}
+    >
+  </view>
+  <view 
+    a:if={{!meta.data}} 
+    a:for="{{meta.children}}"
+  >
+    <meta meta="{{item}}" />
+  </view>
+</view>
