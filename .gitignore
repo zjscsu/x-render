@@ -24,6 +24,9 @@
 .umi-test
 .env.local
 
+# pnpm
+pnpm-lock.yaml
+
 # lerna
 node_modules
 
