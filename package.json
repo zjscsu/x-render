@@ -1,6 +1,12 @@
 {
   "name": "root",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alibaba/x-render.git",
+    "branch": "master",
+    "platform": "github"
+  },
   "workspaces": [
     "packages/*",
     "widgets/*",
@@ -9,33 +15,47 @@
   ],
   "scripts": {
     "build": "lerna run build",
-    "doc": "dumi build",
+    "changelog": "lerna-changelog",
+    "clean": "lerna clean -y",
     "predeploy": "npm run build && npm run doc",
     "deploy": "gh-pages -d docs-dist",
-    "start": "PORT=8080 dumi dev",
-    "size": "ANALYZE=1 dumi build",
-    "clean": "lerna clean -y",
-    "changelog": "lerna-changelog",
-    "publish": "npm run build && lerna publish -m \"chore: publish\" --no-verify-access",
+    "doc": "dumi build",
     "format": "prettier -c --write \"docs/**/*\" \"packages/**/*\" \"tools/**/*\" \"widgets/**/*\"",
+    "publish": "npm run build && lerna publish -m \"chore: publish\" --no-verify-access",
+    "size": "ANALYZE=1 dumi build",
+    "start": "PORT=8080 dumi dev",
     "test": "jest",
-    "test:coverage": "jest --coverage",
-    "test:clean": "jest --clearCache"
+    "test:clean": "jest --clearCache",
+    "test:coverage": "jest --coverage"
+  },
+  "lint-staged": {
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
   },
   "devDependencies": {
     "@babel/core": "^7.17.2",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
+    "@changesets/changelog-github": "^0.4.4",
+    "@changesets/cli": "^2.22.0",
     "@jest/types": "^27.5.1",
     "@testing-library/react": "^12.1.3",
     "@testing-library/react-hooks": "^7.0.2",
     "@types/enzyme": "^3.10.11",
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/jest": "^27.0.3",
+    "@types/node": "^12.12.0",
+    "@types/react": "^18.0.9",
+    "@types/react-dom": "^18.0.5",
     "@umijs/plugin-esbuild": "1.x",
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.0.5",
-    "antd": "^4.x",
+    "antd": "^4.20.7",
+    "antd-mobile": "^5.12.6",
     "babel-jest": "^27.4.4",
     "babel-plugin-import": "^1.13.0",
     "babel-plugin-no-debugger": "^0.0.1",
@@ -44,6 +64,7 @@
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "enzyme-to-json": "^3.6.2",
+    "esno": "^0.16.3",
     "father-build": "^1.17.2",
     "fetch-jsonp": "^1.1.3",
     "gh-pages": "^3.0.0",
@@ -59,27 +80,19 @@
     "prettier-plugin-organize-imports": "^2.3.4",
     "prettier-plugin-packagejson": "^2.2.16",
     "prismjs": "^1.27.0",
-    "react": "^16.12.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
     "react-monaco-editor": "^0.44.0",
     "react-simple-code-editor": "^0.11.0",
     "react-test-renderer": "^17.0.2",
     "ts-jest": "^27.1.3",
     "ts-node": "^10.5.0",
     "typescript": "^4.6.2",
-    "yorkie": "^2.0.0"
+    "yorkie": "^2.0.0",
+    "zustand": "4.0.0-rc.1"
   },
-  "lint-staged": {
-    "*.{js,jsx,less,md,json}": [
-      "prettier --write"
-    ],
-    "*.ts?(x)": [
-      "prettier --parser=typescript --write"
-    ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alibaba/x-render.git",
-    "branch": "master",
-    "platform": "github"
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=7"
   }
 }
