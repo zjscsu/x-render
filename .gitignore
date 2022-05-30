@@ -25,7 +25,7 @@
 .env.local
 
 # pnpm
-pnpm-lock.yaml
+/pnpm-lock.yaml
 
 # lerna
 node_modules
