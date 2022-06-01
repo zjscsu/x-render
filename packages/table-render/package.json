@@ -24,7 +24,7 @@
     "build": "father-build",
     "predeploy": "npm run site",
     "deploy": "gh-pages -d docs-dist",
-    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "postpublish": "git push --tags",
     "site": "dumi build",

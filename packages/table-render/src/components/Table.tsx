@@ -65,7 +65,7 @@ const ProTable: <RecordType extends object = any>(
     return result;
   });
 
-  const tableProps: TableProps<typeof dataSource[number]> = {
+  const tableProps: any = {
     ...props,
     onChange,
     // dataSource不准在使用ProTable时用props赋值

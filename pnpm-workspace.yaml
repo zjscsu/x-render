@@ -1,5 +1,2 @@
 packages:
   - 'packages/**'
-  - 'tools/**'
-  - 'widgets/**'
-  - 'widgets/**'
